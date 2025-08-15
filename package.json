@@ -5,11 +5,23 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "lint": "echo \"No linter configured\" && exit 0"
   },
-  "keywords": [],
+  "keywords": ["nutrition","health","diet","queries","experts"],
   "author": "",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://example.com/your-repo.git"
+  },
+  "bugs": {
+    "url": "https://example.com/your-repo/issues"
+  },
+  "homepage": "https://example.com/your-repo#readme",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "connect-mongo": "^4.6.0",
