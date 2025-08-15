@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "lint": "echo \"No linter configured\" && exit 0"
+    "lint": "echo \"No linter configured\" && exit 0",
+    "validate-name": "node ./scripts/validate-package-name.js"
   },
   "keywords": ["nutrition","health","diet","queries","experts"],
   "author": "",
