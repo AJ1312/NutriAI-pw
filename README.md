@@ -669,19 +669,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 📞 Contact & Support
-
-- **GitHub Issues**: [Report bugs or request features](https://github.com/your-username/health-diet-platform/issues)
-- **Documentation**: [Visit our wiki](https://github.com/your-username/health-diet-platform/wiki)
-- **Email**: support@health-diet-platform.com
-
----
 
 <div align="center">
 
 **Built with ❤️ for health and wellness**
 
-Made by [Your Team Name] | © 2024 Health Diet Consultation Platform
+Made by VIT Students | © 2025 Health Diet Consultation Platform
 
 [⬆ Back to Top](#health-diet-consultation-platform-)
 
