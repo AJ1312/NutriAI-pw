@@ -1,0 +1,99 @@
+<%- include('layout', { title: 'Profile', user: user, body: `
+  <div class="profile-container">
+    <div class="page-header">
+      <h2 class="page-title">My Profile</h2>
+      <div class="header-actions">
+        <button class="btn btn-outline" id="editProfileBtn">
+          <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-edit"/></svg>
+          Edit Profile
+        </button>
+      </div>
+    </div>
+    
+    <div class="profile-content">
+      <div class="profile-card card">
+        <div class="profile-avatar">
+          <div class="avatar-circle">
+            ${user.name.charAt(0).toUpperCase()}
+          </div>
+          <div class="avatar-info">
+            <h3 class="profile-name">${user.name}</h3>
+            <span class="profile-role badge ${user.role === 'expert' ? 'badge-success' : 'badge-primary'}">${user.role}</span>
+          </div>
+        </div>
+        
+        <div class="profile-details">
+          <div class="detail-item">
+            <svg class="detail-icon" width="16" height="16"><use href="/svg/icons.svg#icon-email"/></svg>
+            <div class="detail-content">
+              <span class="detail-label">Email</span>
+              <span class="detail-value">${user.email}</span>
+            </div>
+          </div>
+          
+          <div class="detail-item">
+            <svg class="detail-icon" width="16" height="16"><use href="/svg/icons.svg#icon-calendar"/></svg>
+            <div class="detail-content">
+              <span class="detail-label">Member Since</span>
+              <span class="detail-value">${new Date(user.createdAt).toLocaleDateString()}</span>
+            </div>
+          </div>
+          
+          ${user.bio ? `
+          <div class="detail-item">
+            <svg class="detail-icon" width="16" height="16"><use href="/svg/icons.svg#icon-info"/></svg>
+            <div class="detail-content">
+              <span class="detail-label">Bio</span>
+              <span class="detail-value">${user.bio}</span>
+            </div>
+          </div>
+          ` : ''}
+        </div>
+      </div>
+      
+      <div class="profile-stats card">
+        <h4 class="stats-title">Activity Overview</h4>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number">${typeof queriesCount !== 'undefined' ? queriesCount : 0}</div>
+            <div class="stat-label">Queries Posted</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">${typeof solutionsCount !== 'undefined' ? solutionsCount : 0}</div>
+            <div class="stat-label">Solutions Given</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">${typeof feedbackCount !== 'undefined' ? feedbackCount : 0}</div>
+            <div class="stat-label">Feedback Received</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Edit Profile Modal -->
+    <div id="editModal" class="modal">
+      <div class="modal-content card">
+        <div class="modal-header">
+          <h3>Edit Profile</h3>
+          <button class="modal-close">&times;</button>
+        </div>
+        <form class="edit-form">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" value="${user.name}">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Bio</label>
+            <textarea class="form-control" placeholder="Tell us about yourself...">${user.bio || ''}</textarea>
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-outline" id="cancelEdit">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  
+` }) %>

@@ -1,0 +1,65 @@
+<%- include('layout', { title: 'Queries', user: user, body: `
+  <div class="page-header">
+    <h2 class="page-title">Recent Queries</h2>
+    <div class="header-actions">
+      <a href="/user/post-query" class="btn btn-primary">
+        <svg class="icon" width="20" height="20"><use href="/svg/icons.svg#icon-query"/></svg>
+        New Query
+      </a>
+    </div>
+  </div>
+
+  <div class="filters">
+    <label class="toggle-switch">
+      <input type="checkbox" id="showAnsweredOnly">
+      <span class="toggle-slider"></span>
+    </label>
+    <span class="toggle-label">Show Answered Only</span>
+  </div>
+
+  <div class="queries-grid">
+    ${queries.map(q => `
+      <article class="query-card fade-in">
+        <div class="query-header">
+          <h3 class="query-title">
+            <a href="/user/query/${q._id}">${q.title}</a>
+          </h3>
+          <div class="query-badges">
+            ${q.solutions && q.solutions.length ? 
+              `<span class="badge badge-success">Answered</span>` : 
+              `<span class="badge badge-warning">Pending</span>`
+            }
+          </div>
+        </div>
+        
+        <div class="query-meta">
+          <div class="meta-item">
+            <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-profile"/></svg>
+            <span>${q.postedBy ? q.postedBy.name : 'Unknown'}</span>
+          </div>
+          <div class="meta-item">
+            <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-time"/></svg>
+            <time datetime="${q.createdAt}">${new Date(q.createdAt).toLocaleString()}</time>
+          </div>
+        </div>
+
+        <div class="query-content">
+          <p>${q.description.substring(0,200)}${q.description.length>200?'...':''}</p>
+        </div>
+
+        <div class="query-footer">
+          <a href="/user/query/${q._id}" class="btn btn-ghost">
+            Read More
+            <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-arrow-right"/></svg>
+          </a>
+          ${q.solutions ? 
+            `<span class="solution-count">${q.solutions.length} solution${q.solutions.length !== 1 ? 's' : ''}</span>` :
+            ''
+          }
+        </div>
+      </article>
+    `).join('')}
+  </div>
+
+  
+` }) %>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Solutions - NutriBaba</title>
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/mobile.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <% if (user) { %>
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <h1>NutriBaba</h1>
+            </div>
+            
+            <% if (user.role === 'user') { %>
+                <nav class="nav-group">
+                    <h2 class="nav-title">User Menu</h2>
+                    <div class="nav-items">
+                        <a href="/user/profile" class="<%= path === '/user/profile' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-profile"/></svg>
+                            My Profile
+                        </a>
+                        <a href="/user/post-query" class="<%= path === '/user/post-query' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-query"/></svg>
+                            Post Query
+                        </a>
+                        <a href="/user/queries" class="<%= path === '/user/queries' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-solution"/></svg>
+                            My Queries
+                        </a>
+                        <a href="/user/tips" class="<%= path === '/user/tips' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-tips"/></svg>
+                            Health Tips
+                        </a>
+                        <a href="/user/solutions" class="<%= path === '/user/solutions' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-solution"/></svg>
+                            View Solutions
+                        </a>
+                    </div>
+                </nav>
+            <% } %>
+        </aside>
+        <% } %>
+
+        <div class="main-content <%= user ? '' : 'full' %>" id="main">
+            <!-- Header -->
+            <header class="site-header">
+                <div class="header-container">
+                    <% if (user) { %>
+                    <button id="sidebar-toggle" class="menu-toggle">
+                        <svg width="24" height="24" fill="none" stroke="currentColor">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <% } else { %>
+                    <a href="/" class="brand-logo">
+                        <h1>NutriBaba</h1>
+                    </a>
+                    <% } %>
+                    
+                    <div class="header-right">
+                        <% if (user) { %>
+                            <span class="user-name"><%= user.name %></span>
+                            <a href="/auth/logout" class="btn btn-outline">Logout</a>
+                        <% } else { %>
+                            <a href="/auth/login" class="btn btn-outline">Login</a>
+                            <a href="/auth/register" class="btn btn-primary">Register</a>
+                        <% } %>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="content">
+                <div class="container">
+                    <div class="solutions-container">
+                        <div class="page-header">
+                            <h2 class="page-title">My Solutions</h2>
+                            <p class="page-subtitle">Expert solutions and advice for your queries</p>
+                        </div>
+                        
+                        <% if (solutions && solutions.length > 0) { %>
+                            <div class="solutions-grid">
+                                <% solutions.forEach(solution => { %>
+                                    <div class="solution-card card fade-in">
+                                        <div class="solution-header">
+                                            <h3 class="solution-title">
+                                                <a href="/user/query/<%= solution.queryId %>"><%= solution.queryTitle %></a>
+                                            </h3>
+                                            <div class="solution-meta">
+                                                <span class="expert-name">by <%= solution.expert.name %></span>
+                                                <span class="solution-date"><%= new Date(solution.createdAt).toLocaleDateString() %></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="solution-content">
+                                            <p><%= solution.content.substring(0, 200) %><% if (solution.content.length > 200) { %>...<% } %></p>
+                                        </div>
+                                        
+                                        <div class="solution-actions">
+                                            <a href="/user/query/<%= solution.queryId %>" class="btn btn-outline">
+                                                <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-view"/></svg>
+                                                View Full Solution
+                                            </a>
+                                        </div>
+                                    </div>
+                                <% }) %>
+                            </div>
+                        <% } else { %>
+                            <div class="empty-state">
+                                <div class="empty-icon">
+                                    <svg width="64" height="64"><use href="/svg/icons.svg#icon-solution"/></svg>
+                                </div>
+                                <h3>No Solutions Yet</h3>
+                                <p>When experts respond to your queries, their solutions will appear here.</p>
+                                <a href="/user/post-query" class="btn btn-primary">
+                                    <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-query"/></svg>
+                                    Post Your First Query
+                                </a>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

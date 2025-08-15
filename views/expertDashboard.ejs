@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expert Dashboard - NutriBaba</title>
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/mobile.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <% if (user) { %>
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <h1>NutriBaba</h1>
+            </div>
+            
+            <% if (user.role === 'expert') { %>
+                <nav class="nav-group">
+                    <h2 class="nav-title">Expert Menu</h2>
+                    <div class="nav-items">
+                        <a href="/expert" class="<%= path === '/expert' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-query"/></svg>
+                            View Queries
+                        </a>
+                        <a href="/expert/solutions" class="<%= path === '/expert/solutions' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-solution"/></svg>
+                            My Solutions
+                        </a>
+                        <a href="/expert/feedback" class="<%= path === '/expert/feedback' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-feedback"/></svg>
+                            View Feedback
+                        </a>
+                        <a href="/expert/tips" class="<%= path === '/expert/tips' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-tips"/></svg>
+                            Health Tips
+                        </a>
+                    </div>
+                </nav>
+            <% } %>
+        </aside>
+        <% } %>
+
+        <div class="main-content <%= user ? '' : 'full' %>" id="main">
+            <!-- Header -->
+            <header class="site-header">
+                <div class="header-container">
+                    <% if (user) { %>
+                    <button id="sidebar-toggle" class="menu-toggle">
+                        <svg width="24" height="24" fill="none" stroke="currentColor">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <% } else { %>
+                    <a href="/" class="brand-logo">
+                        <h1>NutriBaba</h1>
+                    </a>
+                    <% } %>
+                    
+                    <div class="header-right">
+                        <% if (user) { %>
+                            <span class="user-name"><%= user.name %></span>
+                            <a href="/auth/logout" class="btn btn-outline">Logout</a>
+                        <% } else { %>
+                            <a href="/auth/login" class="btn btn-outline">Login</a>
+                            <a href="/auth/register" class="btn btn-primary">Register</a>
+                        <% } %>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="content">
+                <div class="container">
+                    <div class="expert-dashboard">
+                        <div class="page-header">
+                            <h2 class="page-title">Expert Dashboard</h2>
+                            <div class="header-stats">
+                                <div class="stat-card">
+                                    <div class="stat-number"><%= queries.length %></div>
+                                    <div class="stat-label">Total Queries</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-filters">
+                            <div class="filter-group">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="showUnansweredOnly" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                                <span class="toggle-label">Show Unanswered Only</span>
+                            </div>
+                            
+                            <select class="form-control filter-select">
+                                <option value="">All Categories</option>
+                                <option value="weight-loss">Weight Loss</option>
+                                <option value="diabetes">Diabetes</option>
+                                <option value="sports-nutrition">Sports Nutrition</option>
+                            </select>
+                        </div>
+                        
+                        <div class="queries-container">
+                            <% if (queries && queries.length > 0) { %>
+                                <% queries.forEach(q => { %>
+                                    <div class="expert-query-card card slide-in">
+                                        <div class="query-header">
+                                            <h3 class="query-title"><%= q.title %></h3>
+                                            <div class="query-badges">
+                                                <% const mySolution = q.solutions && q.solutions.length > 0 ? q.solutions[0] : null; %>
+                                                <% if (mySolution) { %>
+                                                    <% if (mySolution.isSubmitted) { %>
+                                                        <span class="badge badge-success">
+                                                            <svg class="icon" width="12" height="12"><use href="/svg/icons.svg#icon-check"/></svg>
+                                                            Submitted
+                                                        </span>
+                                                    <% } else { %>
+                                                        <span class="badge badge-warning">
+                                                            <svg class="icon" width="12" height="12"><use href="/svg/icons.svg#icon-edit"/></svg>
+                                                            Draft
+                                                        </span>
+                                                    <% } %>
+                                                <% } else { %>
+                                                    <span class="badge badge-info">
+                                                        <svg class="icon" width="12" height="12"><use href="/svg/icons.svg#icon-plus"/></svg>
+                                                        No Solution
+                                                    </span>
+                                                <% } %>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="query-meta">
+                                            <div class="meta-item">
+                                                <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-profile"/></svg>
+                                                <span><%= q.postedBy ? q.postedBy.name : 'Unknown' %></span>
+                                            </div>
+                                            <div class="meta-item">
+                                                <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-time"/></svg>
+                                                <time datetime="<%= q.createdAt %>"><%= new Date(q.createdAt).toLocaleDateString() %></time>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="query-content">
+                                            <p><%= q.description.substring(0,300) %><% if (q.description.length > 300) { %>...<% } %></p>
+                                        </div>
+                                        
+                                        <% if (mySolution) { %>
+                                            <!-- Existing Solution Management -->
+                                            <div class="existing-solution">
+                                                <div class="solution-header">
+                                                    <h4>Your Solution</h4>
+                                                    <div class="solution-actions">
+                                                        <!-- Toggle Submit/Draft Button -->
+                                                        <button class="btn <%= mySolution.isSubmitted ? 'btn-warning' : 'btn-success' %> btn-sm toggle-submission" 
+                                                                data-solution-id="<%= mySolution._id %>"
+                                                                data-is-submitted="<%= mySolution.isSubmitted %>">
+                                                            <svg class="icon" width="12" height="12">
+                                                                <use href="/svg/icons.svg#icon-<%= mySolution.isSubmitted ? 'edit' : 'send' %>"/>
+                                                            </svg>
+                                                            <%= mySolution.isSubmitted ? 'Mark as Draft' : 'Submit Solution' %>
+                                                        </button>
+                                                        
+                                                        <!-- Edit Button -->
+                                                        <button class="btn btn-outline btn-sm edit-solution" 
+                                                                data-solution-id="<%= mySolution._id %>"
+                                                                data-query-id="<%= q._id %>">
+                                                            <svg class="icon" width="12" height="12"><use href="/svg/icons.svg#icon-edit"/></svg>
+                                                            Edit
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="solution-content">
+                                                    <p class="solution-text" id="solution-content-<%= mySolution._id %>">
+                                                        <%= mySolution.content.substring(0, 200) %><% if (mySolution.content.length > 200) { %>...<% } %>
+                                                    </p>
+                                                </div>
+                                                
+                                                <div class="solution-timestamps">
+                                                    <div class="timestamp-item">
+                                                        <small class="text-muted">
+                                                            <svg class="icon" width="12" height="12"><use href="/svg/icons.svg#icon-time"/></svg>
+                                                            Created: <%= new Date(mySolution.createdAt).toLocaleDateString() %> 
+                                                            at <%= new Date(mySolution.createdAt).toLocaleTimeString() %>
+                                                        </small>
+                                                    </div>
+                                                    <% if (mySolution.submittedAt) { %>
+                                                        <div class="timestamp-item">
+                                                            <small class="text-success">
+                                                                <svg class="icon" width="12" height="12"><use href="/svg/icons.svg#icon-send"/></svg>
+                                                                Submitted: <%= new Date(mySolution.submittedAt).toLocaleDateString() %> 
+                                                                at <%= new Date(mySolution.submittedAt).toLocaleTimeString() %>
+                                                            </small>
+                                                        </div>
+                                                    <% } %>
+                                                    <% if (mySolution.lastEditedAt) { %>
+                                                        <div class="timestamp-item">
+                                                            <small class="text-warning">
+                                                                <svg class="icon" width="12" height="12"><use href="/svg/icons.svg#icon-edit"/></svg>
+                                                                Last Edited: <%= new Date(mySolution.lastEditedAt).toLocaleDateString() %> 
+                                                                at <%= new Date(mySolution.lastEditedAt).toLocaleTimeString() %>
+                                                            </small>
+                                                        </div>
+                                                    <% } %>
+                                                </div>
+                                                
+                                                <!-- Edit Form (Hidden by default) -->
+                                                <div class="edit-solution-form" id="edit-form-<%= mySolution._id %>" style="display: none;">
+                                                    <form action="/expert/solution/<%= mySolution._id %>?_method=PUT" method="post">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Update Your Solution</label>
+                                                            <textarea name="content" class="form-control" rows="5" required><%= mySolution.content %></textarea>
+                                                        </div>
+                                                        <div class="form-actions">
+                                                            <button type="button" class="btn btn-ghost cancel-edit">Cancel</button>
+                                                            <button type="submit" class="btn btn-primary">
+                                                                <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-save"/></svg>
+                                                                Update Solution
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        <% } else { %>
+                                            <!-- New Solution Form -->
+                                            <div class="solution-form-container">
+                                                <button class="btn btn-outline toggle-solution-form" data-query-id="<%= q._id %>">
+                                                    <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-plus"/></svg>
+                                                    Provide Solution
+                                                </button>
+                                                
+                                                <div class="solution-form" id="form-<%= q._id %>" style="display: none;">
+                                                    <form action="/expert/solution" method="post">
+                                                        <input type="hidden" name="queryId" value="<%= q._id %>">
+                                                        <div class="form-group">
+                                                            <label class="form-label">Your Expert Solution</label>
+                                                            <textarea name="content" class="form-control" rows="5" required 
+                                                                placeholder="Provide detailed, evidence-based advice..."></textarea>
+                                                        </div>
+                                                        <div class="form-actions">
+                                                            <button type="button" class="btn btn-ghost cancel-solution">Cancel</button>
+                                                            <button type="submit" class="btn btn-primary">
+                                                                <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-send"/></svg>
+                                                                Create Draft
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        <% } %>
+                                    </div>
+                                <% }) %>
+                            <% } else { %>
+                                <div class="empty-state">
+                                    <svg class="empty-icon" width="64" height="64"><use href="/svg/icons.svg#icon-query"/></svg>
+                                    <h3>No queries yet</h3>
+                                    <p>New queries will appear here for you to answer</p>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

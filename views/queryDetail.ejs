@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= q.title %> - NutriBaba</title>
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/mobile.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <% if (user) { %>
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <h1>NutriBaba</h1>
+            </div>
+            
+            <% if (user.role === 'user') { %>
+                <nav class="nav-group">
+                    <h2 class="nav-title">User Menu</h2>
+                    <div class="nav-items">
+                        <a href="/user/profile" class="<%= path === '/user/profile' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-profile"/></svg>
+                            My Profile
+                        </a>
+                        <a href="/user/post-query" class="<%= path === '/user/post-query' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-query"/></svg>
+                            Post Query
+                        </a>
+                        <a href="/user/queries" class="<%= path === '/user/queries' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-solution"/></svg>
+                            My Queries
+                        </a>
+                        <a href="/user/tips" class="<%= path === '/user/tips' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-tips"/></svg>
+                            Health Tips
+                        </a>
+                        <a href="/user/solutions" class="<%= path === '/user/solutions' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-solution"/></svg>
+                            View Solutions
+                        </a>
+                    </div>
+                </nav>
+            <% } else if (user.role === 'expert') { %>
+                <nav class="nav-group">
+                    <h2 class="nav-title">Expert Menu</h2>
+                    <div class="nav-items">
+                        <a href="/expert" class="<%= path === '/expert' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-query"/></svg>
+                            View Queries
+                        </a>
+                        <a href="/expert/solutions" class="<%= path === '/expert/solutions' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-solution"/></svg>
+                            My Solutions
+                        </a>
+                        <a href="/expert/feedback" class="<%= path === '/expert/feedback' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-feedback"/></svg>
+                            View Feedback
+                        </a>
+                        <a href="/expert/tips" class="<%= path === '/expert/tips' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-tips"/></svg>
+                            Health Tips
+                        </a>
+                    </div>
+                </nav>
+            <% } %>
+        </aside>
+        <% } %>
+
+        <div class="main-content <%= user ? '' : 'full' %>" id="main">
+            <!-- Header -->
+            <header class="site-header">
+                <div class="header-container">
+                    <% if (user) { %>
+                    <button id="sidebar-toggle" class="menu-toggle">
+                        <svg width="24" height="24" fill="none" stroke="currentColor">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <% } else { %>
+                    <a href="/" class="brand-logo">
+                        <span class="brand-wrap">
+                            <svg class="logo-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                <use href="/svg/icons.svg#icon-heart"/>
+                            </svg>
+                            <h1>NutriBaba</h1>
+                        </span>
+                    </a>
+                    <% } %>
+                    
+                    <div class="header-right">
+                        <% if (user) { %>
+                            <span class="user-name"><%= user.name %></span>
+                            <a href="/auth/logout" class="btn btn-outline">Logout</a>
+                        <% } else { %>
+                            <a href="/auth/login" class="btn btn-outline">Login</a>
+                            <a href="/auth/register" class="btn btn-primary">Register</a>
+                        <% } %>
+                    </div>
+                </div>
+            </header>
+
+            <main class="content">
+                <div class="container">
+                            <div class="header-actions">
+                                <button class="btn btn-outline" id="shareBtn">
+                                    <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-share"/></svg>
+                                    Share
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card query-content">
+                            <p><%= q.description %></p>
+                        </div>
+
+                        <section class="solutions-section">
+                            <h3 class="section-title">Expert Solutions</h3>
+                            <% if (q.solutions && q.solutions.length > 0) { %>
+                                <% q.solutions.forEach(solution => { %>
+                                    <div class="solution slide-in">
+                                        <div class="solution-header">
+                                            <div class="expert-info">
+                                                <div class="expert-avatar"><%= solution.expert ? solution.expert.name.charAt(0) : 'E' %></div>
+                                                <div>
+                                                    <strong class="expert-name"><%= solution.expert ? solution.expert.name : 'Expert' %></strong>
+                                                    <div class="solution-meta">
+                                                        <time datetime="<%= solution.createdAt %>"><%= new Date(solution.createdAt).toLocaleString() %></time>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-ghost solution-actions-toggle">
+                                                <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-more"/></svg>
+                                            </button>
+                                        </div>
+                                        <div class="solution-content">
+                                            <%= solution.content %>
+                                        </div>
+                                        <div class="solution-footer">
+                                            <button class="btn btn-ghost like-btn">
+                                                <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-heart"/></svg>
+                                                Helpful
+                                            </button>
+                                        </div>
+                                    </div>
+                                <% }) %>
+                            <% } else { %>
+                                <div class="empty-state">No solutions yet. Experts will respond soon.</div>
+                            <% } %>
+                        </section>
+
+                        <% if (user) { %>
+                        <section class="feedback-section">
+                            <h3 class="section-title">Give Feedback</h3>
+                            <%
+                                // Safeguards: ensure optional locals are defined to avoid ReferenceError
+                                const _feedbackSuccess = (typeof feedbackSuccess !== 'undefined') ? feedbackSuccess : false;
+                                const _feedbackError = (typeof feedbackError !== 'undefined') ? feedbackError : null;
+                                const _existingFeedback = (typeof existingFeedback !== 'undefined' && existingFeedback) ? existingFeedback : {};
+                            %>
+                            
+                            <!-- Success Message -->
+                            <% if (_feedbackSuccess) { %>
+                                <div id="feedbackSuccess" class="alert alert-success">
+                                    <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-check"/></svg>
+                                    <span>Feedback submitted successfully! Thank you for your response.</span>
+                                </div>
+                            <% } %>
+                            
+                            <!-- Error Message -->
+                            <% if (_feedbackError === 'duplicate-feedback') { %>
+                                <div class="alert alert-error">
+                                    <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-error"/></svg>
+                                    <span>You have already submitted feedback for this item.</span>
+                                </div>
+                            <% } %>
+                            
+                            <% if (q.solutions && q.solutions.length > 0) { %>
+                                <!-- Individual feedback forms for each expert solution -->
+                                <div class="feedback-options">
+                                    <h4>Rate Expert Solutions:</h4>
+                    <% q.solutions.forEach((solution, index) => { %>
+                                        <% 
+                        const solutionFeedback = _existingFeedback[solution._id.toString()];
+                                            const hasFeedback = !!solutionFeedback;
+                                        %>
+                                        <div class="expert-feedback-card card">
+                                            <div class="expert-feedback-header">
+                                                <div class="expert-info">
+                                                    <div class="expert-avatar"><%= solution.expert ? solution.expert.name.charAt(0) : 'E' %></div>
+                                                    <span class="expert-name"><%= solution.expert ? solution.expert.name : 'Expert' %></span>
+                                                </div>
+                                                <% if (hasFeedback) { %>
+                                                    <div class="feedback-status">
+                                                        <span class="badge badge-success">
+                                                            <svg class="icon" width="12" height="12"><use href="/svg/icons.svg#icon-check"/></svg>
+                                                            Feedback Submitted
+                                                        </span>
+                                                    </div>
+                                                <% } else { %>
+                                                    <button type="button" class="btn btn-outline btn-sm toggle-feedback-form" 
+                                                            data-target="feedbackForm-<%= index %>">
+                                                        <svg class="icon" width="12" height="12"><use href="/svg/icons.svg#icon-feedback"/></svg>
+                                                        Give Feedback
+                                                    </button>
+                                                <% } %>
+                                            </div>
+                                            
+                                            <% if (hasFeedback) { %>
+                                                <!-- Show existing feedback -->
+                                                <div class="existing-feedback">
+                                                    <div class="feedback-content">
+                                                        <strong>Your Feedback:</strong>
+                                                        <p><%= solutionFeedback.message %></p>
+                                                        <% if (solutionFeedback.rating) { %>
+                                                            <div class="rating-display">
+                                                                <span>Rating: </span>
+                                                                <% for (let i = 1; i <= 5; i++) { %>
+                                                                    <svg class="star <%= i <= solutionFeedback.rating ? 'filled' : '' %>" width="16" height="16">
+                                                                        <use href="/svg/icons.svg#icon-star"/>
+                                                                    </svg>
+                                                                <% } %>
+                                                                <span>(<%= solutionFeedback.rating %>/5)</span>
+                                                            </div>
+                                                        <% } %>
+                                                        <small class="feedback-date">Submitted on <%= new Date(solutionFeedback.createdAt).toLocaleDateString() %></small>
+                                                    </div>
+                                                </div>
+                                            <% } else { %>
+                                                <!-- Feedback form -->
+                                                <div class="feedback-form-container" id="feedbackForm-<%= index %>" style="display: none;">
+                                                    <form action="/user/feedback" method="post" class="feedback-form" data-expert-name="<%= solution.expert ? solution.expert.name : 'Expert' %>">
+                                                        <input type="hidden" name="expertId" value="<%= solution.expert ? solution.expert._id : '' %>">
+                                                        <input type="hidden" name="queryId" value="<%= q._id %>">
+                                                        <input type="hidden" name="solutionId" value="<%= solution._id %>">
+                                                        
+                                                        <div class="form-group">
+                                                            <label class="form-label">Your Message to <%= solution.expert ? solution.expert.name : 'Expert' %></label>
+                                                            <textarea name="message" class="form-control" rows="3" required 
+                                                                placeholder="Share your thoughts about this solution..."></textarea>
+                                                        </div>
+                                                        
+                                                        <div class="form-group">
+                                                            <label class="form-label">Rating</label>
+                                                            <div class="rating" data-form-id="<%= index %>">
+                                                                <input type="hidden" name="rating" class="rating-input">
+                                                                <% for (let i = 1; i <= 5; i++) { %>
+                                                                    <button type="button" class="star-btn" data-rating="<%= i %>">
+                                                                        <svg class="star" width="20" height="20">
+                                                                            <use href="/svg/icons.svg#icon-star"/>
+                                                                        </svg>
+                                                                    </button>
+                                                                <% } %>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-actions">
+                                                            <button type="button" class="btn btn-ghost cancel-feedback">Cancel</button>
+                                                            <button type="submit" class="btn btn-primary submit-feedback">
+                                                                <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-send"/></svg>
+                                                                Send Feedback
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                    <% }) %>
+                                </div>
+                            <% } %>
+                            
+                            <!-- General feedback form -->
+                            <% 
+                                const generalFeedback = _existingFeedback['general'];
+                                const hasGeneralFeedback = !!generalFeedback;
+                            %>
+                            <div class="general-feedback-card card">
+                                <div class="general-feedback-header">
+                                    <h4>General Feedback</h4>
+                                    <% if (hasGeneralFeedback) { %>
+                                        <div class="feedback-status">
+                                            <span class="badge badge-success">
+                                                <svg class="icon" width="12" height="12"><use href="/svg/icons.svg#icon-check"/></svg>
+                                                Feedback Submitted
+                                            </span>
+                                        </div>
+                                    <% } else { %>
+                                        <button type="button" class="btn btn-outline btn-sm toggle-feedback-form" 
+                                                data-target="generalFeedbackForm">
+                                            <svg class="icon" width="12" height="12"><use href="/svg/icons.svg#icon-feedback"/></svg>
+                                            Give General Feedback
+                                        </button>
+                                    <% } %>
+                                </div>
+                                
+                                <% if (hasGeneralFeedback) { %>
+                                    <!-- Show existing general feedback -->
+                                    <div class="existing-feedback">
+                                        <div class="feedback-content">
+                                            <strong>Your General Feedback:</strong>
+                                            <p><%= generalFeedback.message %></p>
+                                            <% if (generalFeedback.rating) { %>
+                                                <div class="rating-display">
+                                                    <span>Overall Rating: </span>
+                                                    <% for (let i = 1; i <= 5; i++) { %>
+                                                        <svg class="star <%= i <= generalFeedback.rating ? 'filled' : '' %>" width="16" height="16">
+                                                            <use href="/svg/icons.svg#icon-star"/>
+                                                        </svg>
+                                                    <% } %>
+                                                    <span>(<%= generalFeedback.rating %>/5)</span>
+                                                </div>
+                                            <% } %>
+                                            <small class="feedback-date">Submitted on <%= new Date(generalFeedback.createdAt).toLocaleDateString() %></small>
+                                        </div>
+                                    </div>
+                                <% } else { %>
+                                    <!-- General feedback form -->
+                                    <div class="feedback-form-container" id="generalFeedbackForm" style="display: none;">
+                                        <form action="/user/feedback" method="post" class="feedback-form" data-expert-name="General">
+                                            <input type="hidden" name="queryId" value="<%= q._id %>">
+                                            
+                                            <div class="form-group">
+                                                <label class="form-label">Your General Feedback</label>
+                                                <textarea name="message" class="form-control" rows="4" required 
+                                                    placeholder="Share your overall experience or general comments..."></textarea>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="form-label">Overall Rating</label>
+                                                <div class="rating" data-form-id="general">
+                                                    <input type="hidden" name="rating" class="rating-input">
+                                                    <% for (let i = 1; i <= 5; i++) { %>
+                                                        <button type="button" class="star-btn" data-rating="<%= i %>">
+                                                            <svg class="star" width="20" height="20">
+                                                                <use href="/svg/icons.svg#icon-star"/>
+                                                            </svg>
+                                                        </button>
+                                                    <% } %>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-actions">
+                                                <button type="button" class="btn btn-ghost cancel-feedback">Cancel</button>
+                                                <button type="submit" class="btn btn-primary submit-feedback">
+                                                    <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-send"/></svg>
+                                                    Send General Feedback
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </section>
+                        <% } %>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="site-footer">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>
+                            <svg class="icon" width="18" height="18"><use href="/svg/icons.svg#icon-heart"/></svg>
+                            NutriBaba
+                        </h3>
+                        <p>Get expert diet advice and solutions for your health queries.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Development Team</h3>
+                        <ul class="team-list">
+                            <li>Pranav Rayban - Backend Developer</li>
+                            <li>Divyam Goel - UI Designer</li>
+                            <li>Ajitesh Sharma - Frontend Developer</li>
+                            <li>Tanisha Bagga - Frontend Developer</li>
+                            <li>Satvik - Database Management</li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-links">
+                            <li>
+                                <a href="/about">
+                                    <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-info"/></svg>
+                                    About Us
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/contact">
+                                    <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-email"/></svg>
+                                    Contact
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/privacy">
+                                    <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-view"/></svg>
+                                    Privacy Policy
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <span>&copy; <%= new Date().getFullYear() %> NutriBaba</span>
+                    <span>Built with
+                        <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-heart"/></svg>
+                        and care
+                    </span>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

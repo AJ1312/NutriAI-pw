@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - NutriBaba</title>
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/mobile.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="main-content full" id="main">
+            <!-- Header -->
+            <header class="site-header">
+                <div class="header-container">
+                    <a href="/" class="brand-logo">
+                        <span class="brand-wrap">
+                            <svg class="logo-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                <use href="/svg/icons.svg#icon-heart"/>
+                            </svg>
+                            <h1>NutriBaba</h1>
+                        </span>
+                    </a>
+                    
+                    <div class="header-right">
+                        <button onclick="goBack()" class="btn btn-ghost back-btn">
+                            <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-arrow-left"/></svg>
+                            Go Back
+                        </button>
+                        <% if (user) { %>
+                            <span class="user-name"><%= user.name %></span>
+                            <a href="/auth/logout" class="btn btn-outline">Logout</a>
+                        <% } else { %>
+                            <a href="/auth/login" class="btn btn-outline">Login</a>
+                            <a href="/auth/register" class="btn btn-primary">Register</a>
+                        <% } %>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="content">
+                <div class="container">
+                    <div class="page-content fade-in">
+                        <div class="page-header">
+                            <h1 class="page-title">About NutriBaba</h1>
+                            <p class="page-subtitle">Empowering healthier lives through expert nutrition guidance</p>
+                        </div>
+
+                        <div class="content-sections">
+                            <section class="content-section">
+                                <h2>Our Mission</h2>
+                                <p>At NutriBaba, we believe that proper nutrition is the foundation of a healthy life. Our mission is to connect individuals with certified nutrition experts who provide personalized, evidence-based dietary guidance to help people achieve their health goals.</p>
+                            </section>
+
+                            <section class="content-section">
+                                <h2>What We Offer</h2>
+                                <div class="features-grid">
+                                    <div class="feature-item">
+                                        <svg class="feature-icon" width="32" height="32"><use href="/svg/icons.svg#icon-user"/></svg>
+                                        <h3>Certified Experts</h3>
+                                        <p>Our team consists of licensed dietitians and nutritionists with years of experience in various specialties.</p>
+                                    </div>
+                                    <div class="feature-item">
+                                        <svg class="feature-icon" width="32" height="32"><use href="/svg/icons.svg#icon-target"/></svg>
+                                        <h3>Personalized Plans</h3>
+                                        <p>Every recommendation is tailored to your unique health profile, lifestyle, and dietary preferences.</p>
+                                    </div>
+                                    <div class="feature-item">
+                                        <svg class="feature-icon" width="32" height="32"><use href="/svg/icons.svg#icon-heart"/></svg>
+                                        <h3>Holistic Approach</h3>
+                                        <p>We consider your overall health, not just dietary needs, to provide comprehensive wellness guidance.</p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="content-section">
+                                <h2>Our Expertise Areas</h2>
+                                <div class="expertise-list">
+                                    <div class="expertise-category">
+                                        <h3>Weight Management</h3>
+                                        <p>Sustainable weight loss and gain strategies tailored to your metabolism and lifestyle.</p>
+                                    </div>
+                                    <div class="expertise-category">
+                                        <h3>Medical Nutrition Therapy</h3>
+                                        <p>Specialized nutrition support for diabetes, heart disease, and other chronic conditions.</p>
+                                    </div>
+                                    <div class="expertise-category">
+                                        <h3>Sports Nutrition</h3>
+                                        <p>Performance optimization and recovery nutrition for athletes and fitness enthusiasts.</p>
+                                    </div>
+                                    <div class="expertise-category">
+                                        <h3>Family Nutrition</h3>
+                                        <p>Comprehensive nutrition guidance for all life stages, from pregnancy to senior years.</p>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="content-section">
+                                <h2>Why Choose Us</h2>
+                                <ul class="benefits-list">
+                                    <li>24/7 platform access for posting questions and tracking progress</li>
+                                    <li>Quick response times - most queries answered within 24 hours</li>
+                                    <li>Evidence-based recommendations backed by current research</li>
+                                    <li>Ongoing support and follow-up consultations</li>
+                                    <li>Secure, private platform for your health information</li>
+                                    <li>Free initial consultation to get started</li>
+                                </ul>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="site-footer">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>
+                            <svg class="icon" width="18" height="18"><use href="/svg/icons.svg#icon-heart"/></svg>
+                            NutriBaba
+                        </h3>
+                        <p>Get expert diet advice and solutions for your health queries.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Development Team</h3>
+                        <ul class="team-list">
+                            <li>Pranav Rayban - Backend Developer</li>
+                            <li>Divyam Goel - UI Designer</li>
+                            <li>Ajitesh Sharma - Frontend Developer</li>
+                            <li>Tanisha Bagga - Frontend Developer</li>
+                            <li>Satvik - Database Management</li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-links">
+                            <li>
+                                <a href="/about">
+                                    <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-info"/></svg>
+                                    About Us
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/contact">
+                                    <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-email"/></svg>
+                                    Contact
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/privacy">
+                                    <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-view"/></svg>
+                                    Privacy Policy
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <span>&copy; <%= new Date().getFullYear() %> NutriBaba</span>
+                    <span>Built with
+                        <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-heart"/></svg>
+                        and care
+                    </span>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = '/';
+            }
+        }
+    </script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

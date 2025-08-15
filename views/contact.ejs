@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - NutriBaba</title>
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/mobile.css">
+</head>
+<body>
+    <div class="app-container">
+        <div class="main-content full" id="main">
+            <!-- Header -->
+            <header class="site-header">
+                <div class="header-container">
+                    <a href="/" class="brand-logo">
+                        <span class="brand-wrap">
+                            <svg class="logo-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                <use href="/svg/icons.svg#icon-heart"/>
+                            </svg>
+                            <h1>NutriBaba</h1>
+                        </span>
+                    </a>
+                    
+                    <div class="header-right">
+                        <button onclick="goBack()" class="btn btn-ghost back-btn">
+                            <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-arrow-left"/></svg>
+                            Go Back
+                        </button>
+                        <% if (user) { %>
+                            <span class="user-name"><%= user.name %></span>
+                            <a href="/auth/logout" class="btn btn-outline">Logout</a>
+                        <% } else { %>
+                            <a href="/auth/login" class="btn btn-outline">Login</a>
+                            <a href="/auth/register" class="btn btn-primary">Register</a>
+                        <% } %>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="content">
+                <div class="container">
+                    <div class="page-content fade-in">
+                        <div class="page-header">
+                            <h1 class="page-title">Contact Us</h1>
+                            <p class="page-subtitle">Get in touch with our team - we're here to help</p>
+                        </div>
+
+                        <% if (typeof query !== 'undefined' && query.success) { %>
+                            <div class="alert alert-success" style="margin-bottom: 2rem;">
+                                <svg class="icon" width="20" height="20">
+                                    <use href="/svg/icons.svg#icon-check"></use>
+                                </svg>
+                                Thank you for your message! We'll get back to you soon.
+                            </div>
+                        <% } %>
+
+                        <div class="contact-content">
+                            <div class="contact-grid">
+                                <div class="contact-info">
+                                    <h2>Get In Touch</h2>
+                                    <p>Have questions about our platform or need support? We'd love to hear from you. Our team is available to help you get the most out of NutriBaba.</p>
+                                    
+                                    <div class="contact-methods">
+                                        <div class="contact-item">
+                                            <svg class="contact-icon" width="24" height="24"><use href="/svg/icons.svg#icon-email"/></svg>
+                                            <div class="contact-details">
+                                                <h3>Email Support</h3>
+                                                <p>support@healthdietonline.com</p>
+                                                <span class="response-time">Response within 24 hours</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="contact-item">
+                                            <svg class="contact-icon" width="24" height="24"><use href="/svg/icons.svg#icon-time"/></svg>
+                                            <div class="contact-details">
+                                                <h3>Business Hours</h3>
+                                                <p>Monday - Friday: 9:00 AM - 6:00 PM (EST)</p>
+                                                <span class="response-time">Platform available 24/7</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="contact-item">
+                                            <svg class="contact-icon" width="24" height="24"><use href="/svg/icons.svg#icon-info"/></svg>
+                                            <div class="contact-details">
+                                                <h3>General Inquiries</h3>
+                                                <p>info@healthdietonline.com</p>
+                                                <span class="response-time">For partnerships and media</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="contact-form-section">
+                                    <div class="contact-form-card">
+                                        <h2>Send us a Message</h2>
+                                        <form class="contact-form" action="/contact" method="post">
+                                            <div class="form-group">
+                                                <label class="form-label" for="name">Full Name</label>
+                                                <input type="text" id="name" name="name" class="form-control" required>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="form-label" for="email">Email Address</label>
+                                                <input type="email" id="email" name="email" class="form-control" required>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="form-label" for="subject">Subject</label>
+                                                <select id="subject" name="subject" class="form-control" required>
+                                                    <option value="">Select a topic</option>
+                                                    <option value="general">General Inquiry</option>
+                                                    <option value="support">Technical Support</option>
+                                                    <option value="expert">Become an Expert</option>
+                                                    <option value="partnership">Partnership</option>
+                                                    <option value="feedback">Feedback</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="form-group">
+                                                <label class="form-label" for="message">Message</label>
+                                                <textarea id="message" name="message" rows="5" class="form-control" placeholder="Tell us how we can help you..." required></textarea>
+                                            </div>
+                                            
+                                            <button type="submit" class="btn btn-primary btn-large">
+                                                <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-send"/></svg>
+                                                Send Message
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="faq-section">
+                                <h2>Frequently Asked Questions</h2>
+                                <div class="faq-grid">
+                                    <div class="faq-item">
+                                        <h3>How quickly will I get a response to my query?</h3>
+                                        <p>Most nutrition queries are answered by our experts within 24 hours. Complex cases may take up to 48 hours for a thorough response.</p>
+                                    </div>
+                                    <div class="faq-item">
+                                        <h3>Are your nutritionists certified?</h3>
+                                        <p>Yes, all our nutrition experts are licensed dietitians or certified nutritionists with relevant credentials and experience in their specialties.</p>
+                                    </div>
+                                    <div class="faq-item">
+                                        <h3>Is my health information secure?</h3>
+                                        <p>Absolutely. We use industry-standard encryption and follow strict privacy protocols to protect your personal and health information.</p>
+                                    </div>
+                                    <div class="faq-item">
+                                        <h3>Can I follow up on my query?</h3>
+                                        <p>Yes, you can ask follow-up questions and provide feedback on the solutions provided. Our experts encourage ongoing communication for better results.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="site-footer">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>
+                            <svg class="icon" width="18" height="18"><use href="/svg/icons.svg#icon-heart"/></svg>
+                            NutriBaba
+                        </h3>
+                        <p>Get expert diet advice and solutions for your health queries.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Development Team</h3>
+                        <ul class="team-list">
+                            <li>Pranav Rayban - Backend Developer</li>
+                            <li>Divyam Goel - UI Designer</li>
+                            <li>Ajitesh Sharma - Frontend Developer</li>
+                            <li>Tanisha Bagga - Frontend Developer</li>
+                            <li>Satvik - Database Management</li>
+                        </ul>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-links">
+                            <li>
+                                <a href="/about">
+                                    <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-info"/></svg>
+                                    About Us
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/contact">
+                                    <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-email"/></svg>
+                                    Contact
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/privacy">
+                                    <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-view"/></svg>
+                                    Privacy Policy
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <span>&copy; <%= new Date().getFullYear() %> NutriBaba</span>
+                    <span>Built with
+                        <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-heart"/></svg>
+                        and care
+                    </span>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = '/';
+            }
+        }
+    </script>
+    <script src="/js/main.js"></script>
+</body>
+</html>

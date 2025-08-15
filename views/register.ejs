@@ -1,0 +1,44 @@
+<%- include('layout', { title: 'Register', user: null, body: `
+  <div class="auth-container">
+    <div class="auth-card card fade-in">
+      <div class="auth-header">
+        <h2 class="auth-title">Create Account</h2>
+        <p class="auth-subtitle">Join our community of health enthusiasts</p>
+      </div>
+      
+      <form id="registerForm" action="/auth/register" method="post" class="auth-form" novalidate>
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input name="name" class="form-control" required placeholder="Enter your full name">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input name="email" type="email" class="form-control" required placeholder="Enter your email">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input name="password" type="password" class="form-control" required minlength="6" placeholder="Enter password (min 6 characters)">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Account Type</label>
+          <select name="role" class="form-control">
+            <option value="user">User - Ask diet questions</option>
+            <option value="expert">Diet Expert - Provide solutions</option>
+          </select>
+        </div>
+        
+        <button type="submit" class="btn btn-primary auth-submit">
+          <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-profile"/></svg>
+          Create Account
+        </button>
+      </form>
+      
+      <div class="auth-footer">
+        <p>Already have an account? <a href="/auth/login" class="auth-link">Sign in</a></p>
+      </div>
+    </div>
+  </div>
+` }) %>

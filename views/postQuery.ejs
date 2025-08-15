@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Query - NutriBaba</title>
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/mobile.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <% if (user) { %>
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <h1>NutriBaba</h1>
+            </div>
+            
+            <% if (user.role === 'user') { %>
+                <nav class="nav-group">
+                    <h2 class="nav-title">User Menu</h2>
+                    <div class="nav-items">
+                        <a href="/user/profile" class="<%= path === '/user/profile' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-profile"/></svg>
+                            My Profile
+                        </a>
+                        <a href="/user/post-query" class="<%= path === '/user/post-query' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-query"/></svg>
+                            Post Query
+                        </a>
+                        <a href="/user/queries" class="<%= path === '/user/queries' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-solution"/></svg>
+                            My Queries
+                        </a>
+                        <a href="/user/tips" class="<%= path === '/user/tips' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-tips"/></svg>
+                            Health Tips
+                        </a>
+                        <a href="/user/solutions" class="<%= path === '/user/solutions' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-solution"/></svg>
+                            View Solutions
+                        </a>
+                    </div>
+                </nav>
+            <% } %>
+        </aside>
+        <% } %>
+
+        <div class="main-content <%= user ? '' : 'full' %>" id="main">
+            <!-- Header -->
+            <header class="site-header">
+                <div class="header-container">
+                    <% if (user) { %>
+                    <button id="sidebar-toggle" class="menu-toggle">
+                        <svg width="24" height="24" fill="none" stroke="currentColor">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <% } else { %>
+                    <a href="/" class="brand-logo">
+                        <h1>NutriBaba</h1>
+                    </a>
+                    <% } %>
+                    
+                    <div class="header-right">
+                        <% if (user) { %>
+                            <span class="user-name"><%= user.name %></span>
+                            <a href="/auth/logout" class="btn btn-outline">Logout</a>
+                        <% } else { %>
+                            <a href="/auth/login" class="btn btn-outline">Login</a>
+                            <a href="/auth/register" class="btn btn-primary">Register</a>
+                        <% } %>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="content">
+                <div class="container">
+                    <div class="query-form-container">
+                        <div class="page-header">
+                            <h2 class="page-title">Ask a Diet Expert</h2>
+                            <p class="page-subtitle">Get personalized advice from certified nutrition experts</p>
+                        </div>
+                        
+                        <% if (errors && errors.length > 0) { %>
+                        <div class="alert alert-error">
+                            <ul>
+                                <% errors.forEach(error => { %>
+                                    <li><%= error.msg %></li>
+                                <% }) %>
+                            </ul>
+                        </div>
+                        <% } %>
+                        
+                        <div class="query-form-card card fade-in">
+                            <form id="queryForm" action="/user/post-query" method="post" class="query-form" novalidate>
+                                <div class="form-group">
+                                    <label class="form-label">Query Title</label>
+                                    <input name="title" class="form-control" required 
+                                        value="<%= old.title || '' %>"
+                                        placeholder="e.g., Need help with weight loss diet plan">
+                                    <small class="form-help">Write a clear, descriptive title for your question</small>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Detailed Description</label>
+                                    <textarea name="description" class="form-control" required rows="6"
+                                        placeholder="Describe your health goals, current diet, any restrictions, and specific questions you have..."><%= old.description || '' %></textarea>
+                                    <small class="form-help">Include your age, health condition, dietary preferences, and goals for better advice</small>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Category</label>
+                                    <select name="category" class="form-control">
+                                        <option value="">Select a category</option>
+                                        <option value="weight-loss" <%= old.category === 'weight-loss' ? 'selected' : '' %>>Weight Loss</option>
+                                        <option value="weight-gain" <%= old.category === 'weight-gain' ? 'selected' : '' %>>Weight Gain</option>
+                                        <option value="diabetes" <%= old.category === 'diabetes' ? 'selected' : '' %>>Diabetes Management</option>
+                                        <option value="heart-health" <%= old.category === 'heart-health' ? 'selected' : '' %>>Heart Health</option>
+                                        <option value="sports-nutrition" <%= old.category === 'sports-nutrition' ? 'selected' : '' %>>Sports Nutrition</option>
+                                        <option value="general" <%= old.category === 'general' ? 'selected' : '' %>>General Nutrition</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="checkbox-label">
+                                        <input type="checkbox" class="checkbox" required>
+                                        <span class="checkmark"></span>
+                                        I understand that this advice is for educational purposes and should not replace professional medical consultation
+                                    </label>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <a href="/user/queries" class="btn btn-outline">
+                                        <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-arrow-left"/></svg>
+                                        Back to Queries
+                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-send"/></svg>
+                                        Post Query
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="tips-section">
+                            <h3 class="tips-title">Tips for Better Responses</h3>
+                            <div class="tips-grid">
+                                <div class="tip-item">
+                                    <svg class="tip-icon" width="24" height="24"><use href="/svg/icons.svg#icon-info"/></svg>
+                                    <div class="tip-content">
+                                        <h4>Be Specific</h4>
+                                        <p>Include your age, current weight, height, and activity level</p>
+                                    </div>
+                                </div>
+                                <div class="tip-item">
+                                    <svg class="tip-icon" width="24" height="24"><use href="/svg/icons.svg#icon-target"/></svg>
+                                    <div class="tip-content">
+                                        <h4>State Your Goals</h4>
+                                        <p>Clearly mention what you want to achieve</p>
+                                    </div>
+                                </div>
+                                <div class="tip-item">
+                                    <svg class="tip-icon" width="24" height="24"><use href="/svg/icons.svg#icon-warning"/></svg>
+                                    <div class="tip-content">
+                                        <h4>Mention Restrictions</h4>
+                                        <p>Include allergies, medical conditions, or dietary preferences</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <footer class="site-footer">
+                <div class="footer-content">
+                    <div class="footer-section">
+                        <h3>
+                            <svg class="icon" width="18" height="18"><use href="/svg/icons.svg#icon-heart"/></svg>
+                            NutriBaba
+                        </h3>
+                        <p>Get expert diet advice and solutions for your health queries.</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>Quick Links</h3>
+                        <ul class="footer-links">
+                            <li>
+                                <a href="/about">
+                                    <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-info"/></svg>
+                                    About Us
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/contact">
+                                    <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-email"/></svg>
+                                    Contact
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/privacy">
+                                    <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-view"/></svg>
+                                    Privacy Policy
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <span>&copy; <%= new Date().getFullYear() %> NutriBaba</span>
+                    <span>Built with
+                        <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-heart"/></svg>
+                        and care
+                    </span>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

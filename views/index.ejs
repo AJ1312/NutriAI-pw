@@ -1,0 +1,275 @@
+<%- include('layout', { title: 'Home', user: user, body: `
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Transform Your Health with Expert Nutrition Guidance</h1>
+            <p class="hero-subtitle">Connect with certified dietitians and nutritionists to get personalized advice, evidence-based solutions, and achieve your health goals.</p>
+            <div class="hero-actions">
+                <a href="/user/post-query" class="btn btn-primary">
+                    <svg class="icon" width="20" height="20"><use href="/svg/icons.svg#icon-query"/></svg>
+                    Ask an Expert
+                </a>
+                <a href="/user/queries" class="btn btn-outline">
+                    <svg class="icon" width="20" height="20"><use href="/svg/icons.svg#icon-search"/></svg>
+                    Browse Solutions
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Questions Answered</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Expert Dietitians</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Satisfaction Rate</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image">
+            <!-- Local hero animation video -->
+            <video 
+                class="hero-illustration hero-video" 
+                autoplay 
+                muted 
+                loop 
+                playsinline 
+                preload="auto"
+                disablePictureInPicture
+                controlsList="nodownload nofullscreen noremoteplayback"
+                oncontextmenu="return false;"
+                aria-label="Healthy lifestyle cooking animation">
+                <source src="/assets/vecteezy_hand-drawn-animation-cooking-vegetables_65361342.mov" type="video/mp4" />
+                <source src="/assets/vecteezy_hand-drawn-animation-cooking-vegetables_65361342.mov" type="video/quicktime" />
+                <p>Your browser doesn't support HTML5 video. Here's a fallback message about healthy cooking animation.</p>
+            </video>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">How NutriBaba Works</h2>
+                <p class="section-subtitle">Get personalized nutrition advice in three simple steps</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="icon" width="48" height="48"><use href="/svg/icons.svg#icon-query"/></svg>
+                    </div>
+                    <h3>1. Post Your Question</h3>
+                    <p>Share your health goals, dietary concerns, and any specific requirements. Our experts need detailed information to provide the best advice.</p>
+                    <ul class="feature-list">
+                        <li>Weight management goals</li>
+                        <li>Medical conditions</li>
+                        <li>Dietary preferences</li>
+                        <li>Lifestyle factors</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="icon" width="48" height="48"><use href="/svg/icons.svg#icon-solution"/></svg>
+                    </div>
+                    <h3>2. Get Expert Solutions</h3>
+                    <p>Certified dietitians and nutritionists review your query and provide evidence-based, personalized recommendations within 24 hours.</p>
+                    <ul class="feature-list">
+                        <li>Meal planning guidance</li>
+                        <li>Supplement advice</li>
+                        <li>Exercise recommendations</li>
+                        <li>Progress tracking tips</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg class="icon" width="48" height="48"><use href="/svg/icons.svg#icon-feedback"/></svg>
+                    </div>
+                    <h3>3. Track & Follow Up</h3>
+                    <p>Implement the advice, track your progress, and provide feedback. Follow up with experts for adjustments and continued support.</p>
+                    <ul class="feature-list">
+                        <li>Progress monitoring</li>
+                        <li>Plan adjustments</li>
+                        <li>Community support</li>
+                        <li>Long-term guidance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Expertise Areas -->
+    <section class="expertise">
+        <div class="container">
+            <h2 class="section-title">Our Areas of Expertise</h2>
+            <div class="expertise-grid">
+                <div class="expertise-item">
+                    <svg class="expertise-icon" width="32" height="32"><use href="/svg/icons.svg#icon-weight"/></svg>
+                    <h4>Weight Management</h4>
+                    <p>Sustainable weight loss and gain strategies</p>
+                </div>
+                <div class="expertise-item">
+                    <svg class="expertise-icon" width="32" height="32"><use href="/svg/icons.svg#icon-diabetes"/></svg>
+                    <h4>Diabetes Care</h4>
+                    <p>Blood sugar management through nutrition</p>
+                </div>
+                <div class="expertise-item">
+                    <svg class="expertise-icon" width="32" height="32"><use href="/svg/icons.svg#icon-heart"/></svg>
+                    <h4>Heart Health</h4>
+                    <p>Cardiovascular wellness nutrition plans</p>
+                </div>
+                <div class="expertise-item">
+                    <svg class="expertise-icon" width="32" height="32"><use href="/svg/icons.svg#icon-sports"/></svg>
+                    <h4>Sports Nutrition</h4>
+                    <p>Performance optimization for athletes</p>
+                </div>
+                <div class="expertise-item">
+                    <svg class="expertise-icon" width="32" height="32"><use href="/svg/icons.svg#icon-pregnancy"/></svg>
+                    <h4>Maternal Nutrition</h4>
+                    <p>Pregnancy and breastfeeding support</p>
+                </div>
+                <div class="expertise-item">
+                    <svg class="expertise-icon" width="32" height="32"><use href="/svg/icons.svg#icon-senior"/></svg>
+                    <h4>Senior Wellness</h4>
+                    <p>Age-appropriate nutrition guidance</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Development Team -->
+    <section class="team-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Development Team</h2>
+                <p class="section-subtitle">Meet the passionate developers creating exceptional health solutions</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <svg class="member-icon" width="24" height="24"><use href="/svg/icons.svg#icon-user"/></svg>
+                    </div>
+                    <div class="member-info">
+                        <h3>Pranav Rayban</h3>
+                        <p class="member-role">
+                            <svg class="role-icon" width="16" height="16"><use href="/svg/icons.svg#icon-server"/></svg>
+                            Backend Developer
+                        </p>
+                        <p class="member-desc">Node.js & MongoDB specialist building robust server architecture</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <svg class="member-icon" width="24" height="24"><use href="/svg/icons.svg#icon-user"/></svg>
+                    </div>
+                    <div class="member-info">
+                        <h3>Divyam Goel</h3>
+                        <p class="member-role">
+                            <svg class="role-icon" width="16" height="16"><use href="/svg/icons.svg#icon-edit"/></svg>
+                            UI/UX Designer
+                        </p>
+                        <p class="member-desc">Creating intuitive user experiences with modern design principles</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <svg class="member-icon" width="24" height="24"><use href="/svg/icons.svg#icon-user"/></svg>
+                    </div>
+                    <div class="member-info">
+                        <h3>Ajitesh Sharma</h3>
+                        <p class="member-role">
+                            <svg class="role-icon" width="16" height="16"><use href="/svg/icons.svg#icon-view"/></svg>
+                            Frontend Developer
+                        </p>
+                        <p class="member-desc">JavaScript expert crafting smooth user interactions</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <svg class="member-icon" width="24" height="24"><use href="/svg/icons.svg#icon-user"/></svg>
+                    </div>
+                    <div class="member-info">
+                        <h3>Tanisha Bagga</h3>
+                        <p class="member-role">
+                            <svg class="role-icon" width="16" height="16"><use href="/svg/icons.svg#icon-view"/></svg>
+                            Frontend Developer
+                        </p>
+                        <p class="member-desc">Component development and performance optimization specialist</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <svg class="member-icon" width="24" height="24"><use href="/svg/icons.svg#icon-user"/></svg>
+                    </div>
+                    <div class="member-info">
+                        <h3>Satvik</h3>
+                        <p class="member-role">
+                            <svg class="role-icon" width="16" height="16"><use href="/svg/icons.svg#icon-save"/></svg>
+                            Database Administrator
+                        </p>
+                        <p class="member-desc">Database architecture and data security management</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <div class="cta-header">
+                    <div class="cta-icon">
+                        <svg class="icon" width="48" height="48"><use href="/svg/icons.svg#icon-heart"/></svg>
+                    </div>
+                    <h2>Ready to Transform Your Health?</h2>
+                    <p>Join thousands of people who have improved their lives with expert nutrition guidance. Start your journey today and discover the difference professional advice can make.</p>
+                </div>
+                <div class="cta-stats">
+                    <div class="cta-stat">
+                        <div class="stat-number">10K+</div>
+                        <div class="stat-text">Happy Users</div>
+                    </div>
+                    <div class="cta-stat">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-text">Expert Support</div>
+                    </div>
+                    <div class="cta-stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-text">Free to Start</div>
+                    </div>
+                </div>
+                <div class="cta-buttons">
+                    <a href="/auth/register" class="btn btn-primary btn-large cta-primary">
+                        <svg class="icon" width="20" height="20"><use href="/svg/icons.svg#icon-user-plus"/></svg>
+                        Get Started Free
+                        <span class="btn-subtitle">No credit card required</span>
+                    </a>
+                    <a href="/about" class="btn btn-outline btn-large cta-secondary">
+                        <svg class="icon" width="20" height="20"><use href="/svg/icons.svg#icon-info"/></svg>
+                        Learn More
+                        <span class="btn-subtitle">See how it works</span>
+                    </a>
+                </div>
+                <div class="cta-trust">
+                    <div class="trust-badges">
+                        <div class="trust-item">
+                            <svg class="trust-icon" width="16" height="16"><use href="/svg/icons.svg#icon-check"/></svg>
+                            <span>Certified Experts</span>
+                        </div>
+                        <div class="trust-item">
+                            <svg class="trust-icon" width="16" height="16"><use href="/svg/icons.svg#icon-check"/></svg>
+                            <span>Evidence-Based</span>
+                        </div>
+                        <div class="trust-item">
+                            <svg class="trust-icon" width="16" height="16"><use href="/svg/icons.svg#icon-check"/></svg>
+                            <span>Personalized Plans</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+` }) %>

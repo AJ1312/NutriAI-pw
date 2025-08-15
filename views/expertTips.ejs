@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Tips - NutriBaba</title>
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/mobile.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <% if (user) { %>
+        <aside class="sidebar" id="sidebar">
+            <div class="brand">
+                <h1>NutriBaba</h1>
+            </div>
+            
+            <% if (user.role === 'expert') { %>
+                <nav class="nav-group">
+                    <h2 class="nav-title">Expert Menu</h2>
+                    <div class="nav-items">
+                        <a href="/expert" class="<%= path === '/expert' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-query"/></svg>
+                            View Queries
+                        </a>
+                        <a href="/expert/solutions" class="<%= path === '/expert/solutions' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-solution"/></svg>
+                            My Solutions
+                        </a>
+                        <a href="/expert/feedback" class="<%= path === '/expert/feedback' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-feedback"/></svg>
+                            View Feedback
+                        </a>
+                        <a href="/expert/tips" class="<%= path === '/expert/tips' ? 'active' : '' %>">
+                            <svg class="nav-icon"><use href="/svg/icons.svg#icon-tips"/></svg>
+                            Health Tips
+                        </a>
+                    </div>
+                </nav>
+            <% } %>
+        </aside>
+        <% } %>
+
+        <div class="main-content <%= user ? '' : 'full' %>" id="main">
+            <!-- Header -->
+            <header class="site-header">
+                <div class="header-container">
+                    <% if (user) { %>
+                    <button id="sidebar-toggle" class="menu-toggle">
+                        <svg width="24" height="24" fill="none" stroke="currentColor">
+                            <path d="M4 6h16M4 12h16M4 18h16" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <% } else { %>
+                    <a href="/" class="brand-logo">
+                        <h1>NutriBaba</h1>
+                    </a>
+                    <% } %>
+                    
+                    <div class="header-right">
+                        <% if (user) { %>
+                            <span class="user-name"><%= user.name %></span>
+                            <a href="/auth/logout" class="btn btn-outline">Logout</a>
+                        <% } else { %>
+                            <a href="/auth/login" class="btn btn-outline">Login</a>
+                            <a href="/auth/register" class="btn btn-primary">Register</a>
+                        <% } %>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Content -->
+            <main class="content">
+                <div class="container">
+                    <div class="tips-container">
+                        <div class="page-header">
+                            <h2 class="page-title">Health Tips Management</h2>
+                            <p class="page-subtitle">Create and manage health tips for users</p>
+                        </div>
+                        
+                        <!-- Success/Error Messages -->
+                        <% if (success) { %>
+                            <div class="alert alert-success">
+                                <% if (success === 'tip-published') { %>
+                                    Tip published successfully!
+                                <% } %>
+                            </div>
+                        <% } %>
+                        
+                        <% if (error) { %>
+                            <div class="alert alert-error">
+                                <% if (error === 'missing-fields') { %>
+                                    Please fill in all required fields.
+                                <% } else if (error === 'server-error') { %>
+                                    Server error occurred. Please try again.
+                                <% } %>
+                            </div>
+                        <% } %>
+                        
+                        <!-- Create New Tip Form -->
+                        <div class="tip-form-card card fade-in">
+                            <h3 class="card-title">Publish New Health Tip</h3>
+                            <form action="/expert/publish" method="post" class="tip-form">
+                                <div class="form-group">
+                                    <label class="form-label">Tip Title</label>
+                                    <input name="title" class="form-control" required 
+                                        placeholder="e.g., Best Foods for Heart Health">
+                                    <small class="form-help">Write a clear, engaging title for your tip</small>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Tip Content</label>
+                                    <textarea name="content" class="form-control" required rows="4"
+                                        placeholder="Share your expert advice and practical tips..."></textarea>
+                                    <small class="form-help">Provide actionable advice that users can easily follow</small>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Category</label>
+                                    <select name="category" class="form-control">
+                                        <option value="general">General Nutrition</option>
+                                        <option value="weight-loss">Weight Loss</option>
+                                        <option value="weight-gain">Weight Gain</option>
+                                        <option value="heart-health">Heart Health</option>
+                                        <option value="diabetes">Diabetes Management</option>
+                                        <option value="sports-nutrition">Sports Nutrition</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">
+                                        <svg class="icon" width="16" height="16"><use href="/svg/icons.svg#icon-publish"/></svg>
+                                        Publish Tip
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <!-- Published Tips -->
+                        <div class="tips-section">
+                            <h3 class="section-title">My Published Tips</h3>
+                            
+                            <% if (tips && tips.length > 0) { %>
+                                <div class="tips-grid">
+                                    <% tips.forEach(tip => { %>
+                                        <div class="tip-card card fade-in">
+                                            <div class="tip-header">
+                                                <h4 class="tip-title"><%= tip.title %></h4>
+                                                <div class="tip-meta">
+                                                    <span class="tip-date"><%= new Date(tip.createdAt).toLocaleDateString() %></span>
+                                                    <span class="tip-status badge <%= tip.isPublished ? 'badge-success' : 'badge-warning' %>">
+                                                        <%= tip.isPublished ? 'Published' : 'Draft' %>
+                                                    </span>
+                                                    <% if (tip.category) { %>
+                                                        <span class="tip-category badge badge-info"><%= tip.category %></span>
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="tip-content">
+                                                <p><%= tip.content %></p>
+                                            </div>
+                                            
+                                            <div class="tip-actions">
+                                                <button class="btn btn-outline btn-sm toggle-tip-status" data-tip-id="<%= tip._id %>" data-published="<%= tip.isPublished %>">
+                                                    <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-<%= tip.isPublished ? 'pause' : 'play' %>"/></svg>
+                                                    <%= tip.isPublished ? 'Unpublish' : 'Publish' %>
+                                                </button>
+                                                <button class="btn btn-ghost btn-sm delete-tip" data-tip-id="<%= tip._id %>">
+                                                    <svg class="icon" width="14" height="14"><use href="/svg/icons.svg#icon-delete"/></svg>
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </div>
+                                    <% }) %>
+                                </div>
+                            <% } else { %>
+                                <div class="empty-state">
+                                    <div class="empty-icon">
+                                        <svg width="64" height="64"><use href="/svg/icons.svg#icon-tips"/></svg>
+                                    </div>
+                                    <h4>No Tips Published Yet</h4>
+                                    <p>Share your expertise by publishing helpful health tips for users.</p>
+                                </div>
+                            <% } %>
+                        </div>
+                        
+                        <!-- Quick Tips Guidelines -->
+                        <div class="guidelines-section">
+                            <h3 class="section-title">Tips Guidelines</h3>
+                            <div class="guidelines-grid">
+                                <div class="guideline-item">
+                                    <svg class="guideline-icon" width="24" height="24"><use href="/svg/icons.svg#icon-check"/></svg>
+                                    <div class="guideline-content">
+                                        <h5>Be Evidence-Based</h5>
+                                        <p>Share tips backed by scientific research and professional experience</p>
+                                    </div>
+                                </div>
+                                <div class="guideline-item">
+                                    <svg class="guideline-icon" width="24" height="24"><use href="/svg/icons.svg#icon-target"/></svg>
+                                    <div class="guideline-content">
+                                        <h5>Keep It Actionable</h5>
+                                        <p>Provide practical advice that users can implement immediately</p>
+                                    </div>
+                                </div>
+                                <div class="guideline-item">
+                                    <svg class="guideline-icon" width="24" height="24"><use href="/svg/icons.svg#icon-info"/></svg>
+                                    <div class="guideline-content">
+                                        <h5>Be Clear & Concise</h5>
+                                        <p>Use simple language and avoid complex medical jargon</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script src="/js/main.js"></script>
+</body>
+</html>

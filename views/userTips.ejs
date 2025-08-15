@@ -1,0 +1,88 @@
+<%- include('layout', { title: 'Health Tips', user: user, body: `
+  <div class="tips-list">
+    <div class="page-header">
+      <h2 class="page-title">Expert Health Tips</h2>
+      <p class="page-subtitle">Discover curated health and nutrition tips from our certified experts. Like and share the tips that help you on your wellness journey.</p>
+    </div>
+
+    ${tips && tips.length ? `
+      <div class="tips-filters">
+        <div class="filter-group">
+          <label for="categoryFilter" class="filter-label">Filter by category:</label>
+          <select id="categoryFilter" class="filter-select">
+            <option value="">All Categories</option>
+            <option value="general">General Nutrition</option>
+            <option value="weight-loss">Weight Loss</option>
+            <option value="weight-gain">Weight Gain</option>
+            <option value="heart-health">Heart Health</option>
+            <option value="diabetes">Diabetes Management</option>
+            <option value="sports-nutrition">Sports Nutrition</option>
+          </select>
+        </div>
+        <div class="tips-count">
+          <span id="tipsCount">${tips.length}</span> tips available
+        </div>
+      </div>
+
+      <div class="tips-grid">
+        ${tips.map(tip => `
+          <article class="tip-card" id="tip-${tip._id}" data-category="${tip.category || 'general'}">
+            <div class="tip-header">
+              <h3 class="tip-title">${tip.title}</h3>
+              <div class="tip-meta">
+                <svg class="icon" width="14" height="14">
+                  <use href="/svg/icons.svg#icon-user"/>
+                </svg>
+                <strong>${tip.expert ? tip.expert.name : 'Expert'}</strong>
+                <span>•</span>
+                <svg class="icon" width="14" height="14">
+                  <use href="/svg/icons.svg#icon-calendar"/>
+                </svg>
+                <span>${new Date(tip.createdAt).toLocaleDateString()}</span>
+                ${tip.category ? `
+                  <span>•</span>
+                  <span class="tip-category">${tip.category.replace('-', ' ')}</span>
+                ` : ''}
+              </div>
+            </div>
+
+            <div class="tip-content">
+              <p>${tip.content}</p>
+            </div>
+
+            <div class="tip-actions">
+              <button class="btn like-btn ${tip.isLikedByUser ? 'active' : ''}" data-tip-id="${tip._id}" title="Like this tip">
+                <svg class="icon heart-icon">
+                  <use href="/svg/icons.svg#icon-heart"/>
+                </svg>
+                <span class="like-count" data-tip-id="${tip._id}">${tip.likeCount || 0}</span>
+              </button>
+
+              <button class="btn share-btn" data-tip-id="${tip._id}" title="Share this tip">
+                <svg class="icon">
+                  <use href="/svg/icons.svg#icon-share"/>
+                </svg>
+                Share
+              </button>
+
+              <button class="btn btn-ghost" title="Save for later">
+                <svg class="icon">
+                  <use href="/svg/icons.svg#icon-bookmark"/>
+                </svg>
+                Save
+              </button>
+            </div>
+          </article>
+        `).join('')}
+      </div>
+    ` : `
+      <div class="empty-state">
+        <svg class="icon" width="64" height="64" style="margin-bottom: 16px; color: #d1d5db;">
+          <use href="/svg/icons.svg#icon-lightbulb"/>
+        </svg>
+        <h4>No tips available yet</h4>
+        <p>Our experts are working on creating helpful health tips for you. Check back soon!</p>
+      </div>
+    `}
+  </div>
+` }) %>

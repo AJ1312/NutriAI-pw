@@ -1,0 +1,59 @@
+<%- include('layout', { title: 'Feedback', user: user, body: `
+  <div class="feedback-container">
+    <div class="page-header">
+      <h2 class="page-title">Feedback Received</h2>
+      <p class="page-subtitle">See what users think about your expert solutions</p>
+    </div>
+    
+    <div class="feedback-list">
+      ${feedback.length ? feedback.map(f => `
+        <div class="feedback-card card fade-in">
+          <div class="feedback-header">
+            <div class="feedback-user">
+              <div class="user-avatar">${f.from ? f.from.name.charAt(0) : 'U'}</div>
+              <div class="user-info">
+                <strong>${f.from ? f.from.name : 'Anonymous User'}</strong>
+                ${f.query ? `<div class="feedback-context">
+                  <svg class="icon" width="12" height="12"><use href="/svg/icons.svg#icon-query"/></svg>
+                  Query: ${f.query.title || 'Untitled Query'}
+                </div>` : ''}
+                ${f.solution ? `<div class="feedback-context">
+                  <svg class="icon" width="12" height="12"><use href="/svg/icons.svg#icon-solution"/></svg>
+                  Feedback on your solution
+                </div>` : `<div class="feedback-context">
+                  <svg class="icon" width="12" height="12"><use href="/svg/icons.svg#icon-feedback"/></svg>
+                  General feedback
+                </div>`}
+              </div>
+            </div>
+            <time class="feedback-time" datetime="${f.createdAt}">${new Date(f.createdAt).toLocaleString()}</time>
+          </div>
+          <div class="feedback-content">
+            ${f.message}
+          </div>
+          ${f.rating ? `
+            <div class="feedback-rating">
+              <div class="rating-display">
+                <span class="rating-label">Rating:</span>
+                <div class="rating">
+                  ${Array.from({length: 5}, (_, i) => `
+                    <svg class="star ${i < f.rating ? 'filled' : ''}" width="16" height="16">
+                      <use href="/svg/icons.svg#icon-star"/>
+                    </svg>
+                  `).join('')}
+                </div>
+                <span class="rating-value">${f.rating}/5</span>
+              </div>
+            </div>
+          ` : ''}
+        </div>
+      `).join('') : `
+        <div class="empty-state">
+          <svg class="empty-icon" width="64" height="64"><use href="/svg/icons.svg#icon-feedback"/></svg>
+          <h3>No feedback yet</h3>
+          <p>Feedback from users will appear here when they rate your solutions</p>
+        </div>
+      `}
+    </div>
+  </div>
+` }) %>
