@@ -3,5 +3,11 @@
   "builds": [
     { "src": "app.js", "use": "@vercel/node" }
   ],
-  "env": { "NODE_ENV": "production" }
+  "routes": [
+    { "src": "/(.*)", "dest": "/app.js" }
+  ],
+  "env": { "NODE_ENV": "production" },
+  "functions": {
+    "app.js": { "maxDuration": 30 }
+  }
 }
