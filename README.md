@@ -1,281 +1,97 @@
-# Health Diet Consultation Platform
+# Health Diet Consultation Platform 🍃
 
-A comprehensive web application where users can post diet-related queries and certified diet experts provide professional solutions, feedback, and health tips. The platform features a modern, responsive design optimized for all devices including mobile.
+> A comprehensive web application connecting users with certified diet experts for professional health consultations, solutions, and wellness guidance.
 
-## 🏗️ System Architecture
+[![Node.js](https://img.shields.io/badge/Node.js-16+-green.svg)](https://nodejs.org/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-4.4+-blue.svg)](https://mongodb.com/)
+[![Express.js](https://img.shields.io/badge/Express.js-4.18+-orange.svg)](https://expressjs.com/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+## 🎯 Overview
+
+The Health Diet Consultation Platform is a modern, full-stack web application that bridges the gap between health-conscious individuals and certified nutrition experts. Built with Node.js and MongoDB, it provides a secure, responsive platform for diet consultations, expert solutions, and health education.
+
+### 🌟 Key Features
+
+- **🔐 Secure Authentication** - Role-based access with bcrypt password encryption
+- **💬 Query & Solution System** - Users post diet questions, experts provide professional answers  
+- **📊 Feedback & Rating** - Comprehensive feedback system with 5-star ratings
+- **📝 Health Tips** - Expert-published wellness content with like system
+- **📱 Mobile Responsive** - Optimized for all devices with mobile-first design
+- **🎨 Modern UI/UX** - Professional interface with smooth animations
+- **⚡ Real-time Status** - Draft/submitted solution management
+- **🛡️ Enterprise Security** - Helmet.js security headers and input validation
+
+---
+
+## 🏗️ Architecture Overview
 
 ### Technology Stack
-- **Backend**: Node.js with Express.js framework
-- **Database**: MongoDB with Mongoose ODM
-- **Template Engine**: EJS (Embedded JavaScript)
-- **Session Management**: Express-session with MongoDB store
-- **Authentication**: bcrypt for password hashing
-- **Security**: Helmet for security headers
-- **Validation**: Express-validator
-- **Styling**: Custom CSS with mobile-first responsive design
-- **Icons**: SVG icon system
 
-### Architecture Pattern
-- **MVC Pattern**: Model-View-Controller architecture
-- **RESTful API**: Standard HTTP methods for CRUD operations
-- **Session-based Authentication**: Server-side session management
-- **Responsive Design**: Mobile-first CSS architecture
+| Layer | Technology | Purpose |
+|-------|------------|---------|
+| **Frontend** | EJS Templates + Custom CSS | Server-side rendering with responsive design |
+| **Backend** | Node.js + Express.js | RESTful API with MVC architecture |
+| **Database** | MongoDB + Mongoose | Document-based data storage with ODM |
+| **Authentication** | Express-session + bcrypt | Secure session management |
+| **Security** | Helmet.js + Validators | Protection against common vulnerabilities |
 
-### Data Flow
-```
-User Request → Express Routes → Controllers → Models → MongoDB
-                      ↓
-User Interface ← EJS Views ← Controllers ← Database Response
-```
+### System Architecture Diagram
 
-## 📊 System Architecture Diagram
-
-```
-┌─────────────────────────────────────────────────────────────────────────────────┐
-│                           CLIENT LAYER (Browser)                                │
-├─────────────────────────────────────────────────────────────────────────────────┤
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐           │
-│  │   Mobile    │  │   Tablet    │  │   Desktop   │  │  Ultra-wide │           │
-│  │ (320-767px) │  │(768-1023px) │  │  (1024px+)  │  │  (1440px+)  │           │
-│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────┘           │
-│                                    │                                           │
-│  ┌─────────────────────────────────┼─────────────────────────────────────────┐ │
-│  │           FRONTEND ASSETS       │              STATIC FILES               │ │
-│  │  • HTML/EJS Templates          │  • CSS (6 files)                       │ │
-│  │  • JavaScript (validation)      │  • SVG Icons                           │ │
-│  │  • Responsive CSS               │  • Images                              │ │
-│  └─────────────────────────────────┼─────────────────────────────────────────┘ │
-└─────────────────────────────────────┼─────────────────────────────────────────────┘
-                                      │
-                              ┌───────▼───────┐
-                              │  HTTP REQUEST │
-                              └───────┬───────┘
-┌─────────────────────────────────────┼─────────────────────────────────────────────┐
-│                           SERVER LAYER (Node.js/Express)                        │
-├─────────────────────────────────────┼─────────────────────────────────────────────┤
-│                              ┌──────▼──────┐                                    │
-│                              │   EXPRESS   │                                    │
-│                              │   ROUTER    │                                    │
-│                              └──────┬──────┘                                    │
-│                                     │                                           │
-│  ┌─────────────────────────────────┬┴┬─────────────────────────────────────────┐ │
-│  │           MIDDLEWARE LAYER       │ │              SECURITY LAYER            │ │
-│  │  ┌─────────────────────────────┐ │ │  ┌─────────────────────────────────────┐│ │
-│  │  │  • Session Management      │ │ │  │  • Helmet (Security Headers)       ││ │
-│  │  │  • Authentication Check    │ │ │  │  • bcrypt (Password Hashing)       ││ │
-│  │  │  • Request Logging         │ │ │  │  • express-validator (Input Valid) ││ │
-│  │  │  • Static File Serving     │ │ │  │  • CSRF Protection                 ││ │
-│  │  └─────────────────────────────┘ │ │  └─────────────────────────────────────┘│ │
-│  └─────────────────────────────────┬─┴─┬─────────────────────────────────────────┘ │
-│                                    │   │                                          │
-│                              ┌─────▼───▼─────┐                                   │
-│                              │   ROUTE LAYER │                                   │
-│                              │               │                                   │
-│  ┌──────────────────────────┬─┴───────────────┴─┬────────────────────────────┐   │
-│  │    AUTH ROUTES           │    USER ROUTES     │    EXPERT ROUTES           │   │
-│  │  /auth/register          │  /user/profile     │  /expert/dashboard         │   │
-│  │  /auth/login             │  /user/queries     │  /expert/solutions         │   │
-│  │  /auth/logout            │  /user/solutions   │  /expert/feedback          │   │
-│  └──────────────────────────┼────────────────────┼────────────────────────────┘   │
-│                             │                    │                                │
-│                      ┌──────▼──────┐    ┌───────▼──────┐    ┌─────────────────┐   │
-│                      │    AUTH     │    │     USER     │    │     EXPERT      │   │
-│                      │ CONTROLLER  │    │ CONTROLLER   │    │   CONTROLLER    │   │
-│                      └──────┬──────┘    └───────┬──────┘    └─────────┬───────┘   │
-│                             │                   │                     │           │
-│                             └───────────────────┼─────────────────────┘           │
-│                                                 │                                 │
-│                                          ┌──────▼──────┐                         │
-│                                          │    MODEL    │                         │
-│                                          │    LAYER    │                         │
-│  ┌──────────────────────────────────────┬┴─────────────┴┬──────────────────────┐ │
-│  │        USER MODEL                    │  QUERY MODEL  │    SOLUTION MODEL    │ │
-│  │  • Authentication                    │  • CRUD Ops   │    • CRUD Ops        │ │
-│  │  • Profile Management               │  • Validation │    • Status Mgmt     │ │
-│  │  • Role-based Access               │              │                      │ │
-│  └──────────────────────────────────────┼───────────────┼──────────────────────┘ │
-│                                         │               │                        │
-│  ┌──────────────────────────────────────┼───────────────┼──────────────────────┐ │
-│  │      FEEDBACK MODEL                  │   TIP MODEL   │    SESSION STORE     │ │
-│  │  • Rating System                     │  • Publishing │    • MongoDB Store   │ │
-│  │  • User Feedback                     │  • Like System│    • Session Mgmt    │ │
-│  └──────────────────────────────────────┼───────────────┼──────────────────────┘ │
-└─────────────────────────────────────────┼───────────────┼────────────────────────┘
-                                          │               │
-                                   ┌──────▼───────────────▼──────┐
-                                   │      MONGOOSE ODM            │
-                                   │  • Schema Validation         │
-                                   │  • Data Relationships        │
-                                   │  • Query Building           │
-                                   └──────────────┬───────────────┘
-                                                  │
-┌─────────────────────────────────────────────────┼─────────────────────────────────┐
-│                           DATABASE LAYER (MongoDB)                              │
-├─────────────────────────────────────────────────┼─────────────────────────────────┤
-│                                          ┌──────▼──────┐                         │
-│                                          │   MONGODB   │                         │
-│                                          │   SERVER    │                         │
-│  ┌─────────────────────────────────────┬─┴─────────────┴─┬─────────────────────┐ │
-│  │        USERS COLLECTION             │    QUERIES      │   SOLUTIONS         │ │
-│  │  • _id, name, email                 │   COLLECTION    │   COLLECTION        │ │
-│  │  • password (hashed)                │  • Query docs   │  • Solution docs    │ │
-│  │  • role, timestamps                 │  • References   │  • Status tracking  │ │
-│  └─────────────────────────────────────┼─────────────────┼─────────────────────┘ │
-│                                        │                 │                       │
-│  ┌─────────────────────────────────────┼─────────────────┼─────────────────────┐ │
-│  │      FEEDBACK COLLECTION            │  TIPS COLLECTION│   SESSIONS STORE    │ │
-│  │  • Rating & Comments                │  • Health Tips  │  • User Sessions    │ │
-│  │  • User References                  │  • Like System  │  • Auth State       │ │
-│  └─────────────────────────────────────┼─────────────────┼─────────────────────┘ │
-└─────────────────────────────────────────┼─────────────────┼───────────────────────┘
-                                          │                 │
-                           ┌──────────────▼─────────────────▼──────────────┐
-                           │           DATABASE OPERATIONS                  │
-                           │  • CRUD Operations                            │
-                           │  • Aggregation Pipelines                     │
-                           │  • Indexing & Performance                     │
-                           │  • Data Relationships                         │
-                           └───────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph "Client Layer"
+        A[Mobile Devices<br/>320-767px] 
+        B[Tablets<br/>768-1023px]
+        C[Desktop<br/>1024px+]
+        D[Ultra-wide<br/>1440px+]
+    end
+    
+    subgraph "Application Layer"
+        E[Express.js Server]
+        F[Authentication Middleware]
+        G[Route Controllers]
+        H[Business Logic]
+    end
+    
+    subgraph "Data Layer"
+        I[Mongoose ODM]
+        J[MongoDB Database]
+        K[Session Store]
+    end
+    
+    A --> E
+    B --> E  
+    C --> E
+    D --> E
+    E --> F
+    F --> G
+    G --> H
+    H --> I
+    I --> J
+    I --> K
 ```
 
-### Key Features
-- **User Management**: Registration, login, profile management
-- **Query System**: Users can post diet-related questions
-- **Expert Solutions**: Experts provide detailed answers
-- **Feedback System**: Users can rate and provide feedback
-- **Health Tips**: Experts publish general health tips
-- **Real-time Status**: Draft/submitted solution management
-- **Mobile Responsive**: Optimized for iPhone and all devices
-- **Professional UI**: Modern design with animations
+---
 
-## 📁 Project Structure
-
-```
-project/
-├── app.js                          # Main application entry point
-├── package.json                    # Dependencies and scripts
-├── README.md                       # Project documentation
-├── .env                           # Environment variables
-│
-├── controllers/                    # Business logic layer
-│   ├── authController.js          # Authentication logic
-│   ├── expertController.js        # Expert functionality
-│   └── userController.js          # User functionality
-│
-├── middleware/                     # Custom middleware
-│   └── auth.js                    # Authentication middleware
-│
-├── models/                        # Database schemas
-│   ├── Feedback.js               # Feedback schema
-│   ├── Query.js                  # Query schema
-│   ├── Solution.js               # Solution schema
-│   ├── Tip.js                    # Health tip schema
-│   └── User.js                   # User schema
-│
-├── routes/                        # Express routes
-│   ├── auth.js                   # Authentication routes
-│   ├── expert.js                 # Expert routes
-│   └── user.js                   # User routes
-│
-├── views/                         # EJS templates
-│   ├── layout.ejs                # Main layout template
-│   ├── index.ejs                 # Homepage
-│   ├── login.ejs                 # Login page
-│   ├── register.ejs              # Registration page
-│   ├── profile.ejs               # User profile
-│   ├── postQuery.ejs             # Post query form
-│   ├── query.ejs                 # Query list
-│   ├── queryDetail.ejs           # Query details
-│   ├── queryDetail2.ejs          # Alternative query view
-│   ├── solutions.ejs             # Solutions list
-│   ├── userTips.ejs              # User tips view
-│   ├── expertDashboard.ejs       # Expert dashboard
-│   ├── expertDashboard2.ejs      # Alternative dashboard
-│   ├── expertSolutions.ejs       # Expert solutions
-│   ├── expertTips.ejs            # Expert tips management
-│   ├── expertFeedback.ejs        # Expert feedback view
-│   ├── about.ejs                 # About page
-│   ├── contact.ejs               # Contact page
-│   └── privacy.ejs               # Privacy policy
-│
-└── public/                        # Static assets
-    ├── css/                       # Stylesheets
-    │   ├── style.css             # Base styles and typography
-    │   ├── layout.css            # Layout and structure
-    │   ├── components.css        # Reusable components
-    │   ├── animations.css        # Animations and transitions
-    │   ├── pages.css             # Page-specific styles
-    │   └── mobile.css            # Mobile responsiveness
-    ├── js/                       # Client-side JavaScript
-    │   ├── main.js               # Main JavaScript functionality
-    │   └── validation.js         # Form validation
-    └── svg/                      # SVG icons
-        └── icons.svg             # Icon sprite sheet
-```
-
-## 🗄️ Database Schema
-
-### Users Collection
-- `_id`: ObjectId
-- `name`: String (required)
-- `email`: String (unique, required)
-- `password`: String (hashed, required)
-- `role`: String (enum: 'user', 'expert')
-- `createdAt`: Date
-
-### Queries Collection
-- `_id`: ObjectId
-- `title`: String (required)
-- `description`: String (required)
-- `postedBy`: ObjectId (ref: User)
-- `solutions`: [ObjectId] (ref: Solution)
-- `createdAt`: Date
-
-### Solutions Collection
-- `_id`: ObjectId
-- `query`: ObjectId (ref: Query)
-- `expert`: ObjectId (ref: User)
-- `content`: String (required)
-- `isSubmitted`: Boolean (default: false)
-- `submittedAt`: Date
-- `lastEditedAt`: Date
-- `createdAt`: Date
-
-### Feedback Collection
-- `_id`: ObjectId
-- `from`: ObjectId (ref: User)
-- `toExpert`: ObjectId (ref: User, optional)
-- `query`: ObjectId (ref: Query)
-- `solution`: ObjectId (ref: Solution, optional)
-- `message`: String (required)
-- `rating`: Number (1-5, optional)
-- `createdAt`: Date
-
-### Tips Collection
-- `_id`: ObjectId
-- `title`: String (required)
-- `content`: String (required)
-- `category`: String (default: 'general')
-- `expert`: ObjectId (ref: User)
-- `isPublished`: Boolean (default: true)
-- `likes`: [{user: ObjectId, likedAt: Date}]
-- `createdAt`: Date
-
-## 🚀 Installation & Setup
+## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js (v14 or higher)
-- MongoDB database
-- npm or yarn package manager
 
-### Installation Steps
-1. **Clone the repository**
+Ensure you have the following installed:
+- **Node.js** (v16.0.0 or higher)
+- **MongoDB** (v4.4 or higher)
+- **npm** or **yarn** package manager
+
+### Installation
+
+1. **Clone the Repository**
    ```bash
-   git clone <repository-url>
-   cd project
+   git clone https://github.com/your-username/health-diet-platform.git
+   cd health-diet-platform
    ```
 
-2. **Install dependencies**
+2. **Install Dependencies**
    ```bash
    npm install
    ```
@@ -285,351 +101,587 @@ project/
    cp .env.example .env
    ```
    
-   Configure your `.env` file:
+   Update your `.env` file:
    ```env
+   # Database Configuration
    MONGODB_URI=mongodb://localhost:27017/health-diet-app
-   SESSION_SECRET=your-secure-session-secret
+   
+   # Security
+   SESSION_SECRET=your-cryptographically-secure-secret-key
+   
+   # Server Configuration
    PORT=3000
+   NODE_ENV=development
    ```
 
-4. **Start the application**
+4. **Start the Application**
    ```bash
+   # Development mode with auto-reload
+   npm run dev
+   
+   # Production mode
    npm start
    ```
 
-5. **Development mode**
-   ```bash
-   npm run dev
-   ```
+5. **Access the Application**
+   Open your browser and navigate to `http://localhost:3000`
 
-## 🔐 Security Features
+---
 
-- **Password Security**: bcrypt hashing with salt rounds
-- **Session Management**: Secure session storage with MongoDB
-- **Input Validation**: Server-side validation using express-validator
-- **Security Headers**: Helmet.js for security headers
-- **Authentication Middleware**: Protected routes for authenticated users
-- **CSRF Protection**: Built-in protection mechanisms
-- **Data Sanitization**: Input sanitization and validation
+## 📁 Project Structure
+
+```
+health-diet-platform/
+├── 📄 app.js                 # Application entry point
+├── 📄 package.json          # Dependencies and scripts
+├── 📄 .env                  # Environment variables
+│
+├── 📂 controllers/          # Business logic layer
+│   ├── authController.js    # Authentication operations
+│   ├── expertController.js  # Expert functionality
+│   └── userController.js    # User operations
+│
+├── 📂 middleware/           # Custom middleware
+│   └── auth.js             # Authentication guards
+│
+├── 📂 models/              # MongoDB schemas
+│   ├── User.js            # User account schema
+│   ├── Query.js           # Diet query schema
+│   ├── Solution.js        # Expert solution schema
+│   ├── Feedback.js        # Rating & feedback schema
+│   └── Tip.js             # Health tip schema
+│
+├── 📂 routes/              # Express route definitions
+│   ├── auth.js            # Authentication routes
+│   ├── user.js            # User-specific routes
+│   └── expert.js          # Expert-specific routes
+│
+├── 📂 views/               # EJS template files
+│   ├── layout.ejs         # Main layout template
+│   ├── index.ejs          # Homepage
+│   ├── auth/              # Authentication pages
+│   ├── user/              # User dashboard pages
+│   └── expert/            # Expert dashboard pages
+│
+└── 📂 public/              # Static assets
+    ├── 📂 css/            # Stylesheet modules
+    ├── 📂 js/             # Client-side JavaScript
+    └── 📂 svg/            # Scalable vector icons
+```
+
+---
+
+## 🗄️ Database Schema
+
+### Entity Relationship Overview
+
+```mermaid
+erDiagram
+    User ||--o{ Query : posts
+    User ||--o{ Solution : provides
+    User ||--o{ Feedback : gives
+    User ||--o{ Tip : publishes
+    Query ||--o{ Solution : has
+    Query ||--o{ Feedback : receives
+    Solution ||--o{ Feedback : gets
+    
+    User {
+        ObjectId _id PK
+        string name
+        string email UK
+        string password
+        enum role
+        date createdAt
+    }
+    
+    Query {
+        ObjectId _id PK
+        string title
+        string description
+        ObjectId postedBy FK
+        date createdAt
+    }
+    
+    Solution {
+        ObjectId _id PK
+        ObjectId query FK
+        ObjectId expert FK
+        string content
+        boolean isSubmitted
+        date submittedAt
+        date createdAt
+    }
+    
+    Feedback {
+        ObjectId _id PK
+        ObjectId from FK
+        ObjectId toExpert FK
+        ObjectId query FK
+        ObjectId solution FK
+        string message
+        number rating
+        date createdAt
+    }
+    
+    Tip {
+        ObjectId _id PK
+        string title
+        string content
+        string category
+        ObjectId expert FK
+        boolean isPublished
+        array likes
+        date createdAt
+    }
+```
+
+---
+
+## 🔗 API Reference
+
+### Authentication Endpoints
+
+| Method | Endpoint | Description | Request Body |
+|--------|----------|-------------|--------------|
+| `POST` | `/auth/register` | Create new user account | `{name, email, password, role?}` |
+| `POST` | `/auth/login` | Authenticate user | `{email, password}` |
+| `POST` | `/auth/logout` | End user session | None |
+
+### User Endpoints
+
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| `GET` | `/user/profile` | View user profile | Authenticated Users |
+| `GET` | `/user/queries` | List user's queries | Authenticated Users |
+| `POST` | `/user/queries` | Create new query | Authenticated Users |
+| `GET` | `/user/solutions` | View received solutions | Authenticated Users |
+| `POST` | `/user/feedback` | Submit feedback | Authenticated Users |
+
+### Expert Endpoints
+
+| Method | Endpoint | Description | Access |
+|--------|----------|-------------|--------|
+| `GET` | `/expert/dashboard` | Expert dashboard | Experts Only |
+| `POST` | `/expert/solutions` | Submit solution | Experts Only |
+| `GET` | `/expert/solutions` | Manage solutions | Experts Only |
+| `POST` | `/expert/tips` | Publish health tip | Experts Only |
+| `GET` | `/expert/feedback` | View feedback received | Experts Only |
+
+---
+
+## 🔒 Security Features
+
+### Authentication & Authorization
+- **Password Security**: bcrypt hashing with configurable salt rounds
+- **Session Management**: MongoDB-backed sessions with TTL
+- **Role-Based Access**: User and Expert role separation
+- **Route Protection**: Middleware-based authentication guards
+
+### Input Validation & Sanitization
+- **Server-Side Validation**: Express-validator for all inputs
+- **XSS Protection**: HTML sanitization and encoding
+- **SQL Injection Prevention**: Mongoose ODM protection
+- **CSRF Protection**: Built-in request verification
+
+### Security Headers
+```javascript
+// Implemented security headers via Helmet.js
+{
+  contentSecurityPolicy: true,
+  crossOriginEmbedderPolicy: true,
+  crossOriginOpenerPolicy: true,
+  crossOriginResourcePolicy: true,
+  hsts: true,
+  noSniff: true,
+  frameguard: true
+}
+```
+
+---
 
 ## 📱 Responsive Design
 
-- **Mobile-First Approach**: Optimized for mobile devices
-- **iPhone Compatibility**: Specific optimizations for iOS devices
-- **Touch-Friendly**: 44px minimum touch targets
-- **Responsive Breakpoints**: 
-  - Mobile: 320px - 767px
-  - Tablet: 768px - 1023px
-  - Desktop: 1024px+
-  - Ultra-wide: 1440px+
+### Mobile-First Approach
+
+Our responsive design ensures optimal user experience across all devices:
+
+| Breakpoint | Device Type | Design Focus |
+|------------|-------------|--------------|
+| `320px - 767px` | Mobile Phones | Touch-friendly, single column |
+| `768px - 1023px` | Tablets | Balanced layout, readable text |
+| `1024px - 1439px` | Desktop | Multi-column, enhanced interactions |
+| `1440px+` | Ultra-wide | Maximized screen real estate |
+
+### Key Responsive Features
+- **Touch-Friendly**: 44px minimum touch targets for iOS compliance
+- **Readable Typography**: Fluid typography scaling
+- **Optimized Images**: SVG icons for crisp display at any resolution
+- **Smooth Animations**: CSS transitions optimized for mobile performance
+
+---
 
 ## 🎨 CSS Architecture
 
-- **style.css**: Base typography and design system
-- **layout.css**: Layout structure, header, footer, sidebar
-- **components.css**: Reusable UI components and utilities
-- **animations.css**: Smooth transitions and animations
-- **pages.css**: Page-specific styling and desktop optimizations
-- **mobile.css**: Mobile-specific responsive behavior
+### Modular Stylesheet Organization
 
-## 🔧 API Endpoints
-
-### Authentication
-- `POST /auth/register` - User registration
-- `POST /auth/login` - User login
-- `POST /auth/logout` - User logout
-
-### User Routes
-- `GET /user/profile` - User profile
-- `GET /user/queries` - User's queries
-- `POST /user/query` - Create new query
-- `GET /user/solutions` - User's solutions
-- `GET /user/tips` - View health tips
-- `POST /user/feedback` - Submit feedback
-
-### Expert Routes
-- `GET /expert` - Expert dashboard
-- `POST /expert/solution` - Submit solution
-- `GET /expert/solutions` - Expert's solutions
-- `GET /expert/feedback` - Expert's feedback
-- `GET /expert/tips` - Manage tips
-- `POST /expert/tip` - Publish new tip
-
-## 🎯 Future Enhancements
-
-- Email notifications for new queries/solutions
-- Advanced search and filtering
-- File upload for diet plans
-- Real-time chat between users and experts
-- Mobile app development
-- Payment integration for premium features
-- Advanced analytics dashboard
-
-## �‍💻 Developer Information
-
-### Development Team
-- **Project Type**: Full-Stack Web Application
-- **Development Approach**: Agile Development with MVC Architecture
-- **Code Quality**: Production-ready with comprehensive error handling
-- **Testing**: Manual testing across multiple devices and browsers
-
-### Technical Specifications
-
-#### Backend Architecture
-```javascript
-// Express.js Server Configuration
-const app = express();
-app.use(helmet());                    // Security headers
-app.use(session({                     // Session management
-  store: MongoStore.create(),
-  secret: process.env.SESSION_SECRET
-}));
-app.use(express.static('public'));    // Static file serving
-app.set('view engine', 'ejs');        // Template engine
+```
+public/css/
+├── style.css        # Base typography and design tokens
+├── layout.css       # Grid system and layout components  
+├── components.css   # Reusable UI components
+├── animations.css   # Transitions and micro-interactions
+├── pages.css        # Page-specific styling
+└── mobile.css       # Mobile-specific responsive behavior
 ```
 
-#### Database Design Principles
-- **Normalization**: Proper data relationships with references
-- **Indexing**: Optimized queries with strategic indexes
-- **Validation**: Schema-level validation with Mongoose
-- **Security**: No direct database exposure, ODM protection
+### Design System
+- **Color Palette**: Consistent health-focused color scheme
+- **Typography**: Readable font hierarchy with web-safe fonts
+- **Spacing**: 8px grid system for consistent spacing
+- **Components**: Reusable button, form, and card components
 
-#### Frontend Architecture
-- **Progressive Enhancement**: Works without JavaScript
-- **Mobile-First**: Responsive design starting from 320px
-- **Accessibility**: ARIA labels, semantic HTML, keyboard navigation
-- **Performance**: Optimized CSS/JS, minimal dependencies
+---
 
-### Development Workflow
+## ⚡ Performance Optimization
 
-#### 1. Local Development Setup
+### Backend Optimizations
+- **Database Indexing**: Strategic indexes on frequently queried fields
+- **Query Optimization**: Mongoose population with field selection
+- **Session Caching**: MongoDB session store with TTL
+- **Error Handling**: Comprehensive try-catch blocks
+
+### Frontend Optimizations
+- **Asset Minification**: Compressed CSS and JavaScript
+- **SVG Icons**: Scalable vector graphics for performance
+- **Lazy Loading**: Progressive content loading
+- **Browser Caching**: Optimized cache headers for static assets
+
+### Database Performance
+```javascript
+// Example: Optimized query with population
+const queries = await Query.find({ postedBy: userId })
+  .populate('solutions', 'content isSubmitted expert')
+  .populate('postedBy', 'name')
+  .sort({ createdAt: -1 })
+  .limit(10);
+```
+
+---
+
+## 🧪 Testing & Quality Assurance
+
+### Manual Testing Coverage
+- **Cross-Browser**: Chrome, Firefox, Safari, Edge
+- **Mobile Devices**: iOS Safari, Chrome Mobile, Samsung Browser  
+- **Accessibility**: ARIA labels, keyboard navigation, screen reader compatibility
+- **Performance**: Page load times, responsive behavior testing
+
+### Code Quality Standards
+- **ESLint Integration**: Consistent coding standards
+- **Error Handling**: Comprehensive error catching and user feedback
+- **Input Validation**: Both client-side and server-side validation
+- **Security Testing**: Authentication flows and data protection
+
+---
+
+## 🚢 Deployment Guide
+
+### Environment Setup
+
+#### Development Environment
 ```bash
-# Environment setup
-git clone <repository>
-cd project
+# Install dependencies
 npm install
+
+# Setup environment variables
 cp .env.example .env
 
-# Database setup
-# Ensure MongoDB is running locally or configure cloud connection
-# Update MONGODB_URI in .env file
+# Start MongoDB locally
+mongod --dbpath /path/to/db
 
-# Start development server
+# Run development server
 npm run dev
 ```
 
-#### 2. Development Standards
-- **Code Style**: Consistent indentation, meaningful variable names
-- **Error Handling**: Try-catch blocks, user-friendly error messages
-- **Security**: Input validation, password hashing, session management
-- **Performance**: Efficient database queries, optimized static assets
+#### Production Environment
+```bash
+# Install production dependencies only
+npm ci --only=production
 
-#### 3. File Organization Principles
-```
-controllers/     # Business logic only
-├── Separation of concerns
-├── Error handling in every function
-└── Async/await pattern
+# Set production environment variables
+export NODE_ENV=production
+export MONGODB_URI=your-production-mongodb-uri
+export SESSION_SECRET=your-secure-session-secret
 
-models/          # Database schemas
-├── Mongoose schemas with validation
-├── Proper data relationships
-└── Timestamps and indexes
-
-views/           # EJS templates
-├── Layout inheritance
-├── Partial components
-└── Clean, semantic HTML
-
-public/          # Static assets
-├── Organized CSS architecture
-├── Modular JavaScript
-└── Optimized SVG icons
+# Start production server
+npm start
 ```
 
-#### 4. Security Implementation
-- **Authentication Flow**: Session-based with secure cookies
-- **Password Security**: bcrypt with salt rounds (10)
-- **Input Validation**: Server-side validation with express-validator
-- **XSS Protection**: Helmet.js security headers
-- **Session Security**: MongoDB session store with TTL
+### Deployment Checklist
 
-#### 5. Responsive Design Implementation
-```css
-/* Mobile-first approach */
-.component {
-  /* Base mobile styles */
-}
+- [ ] MongoDB connection string configured
+- [ ] Session secret is cryptographically secure (32+ characters)
+- [ ] Environment variables set correctly
+- [ ] Database indexes created
+- [ ] HTTPS enabled (handled by hosting platform)
+- [ ] Error logging configured
+- [ ] Static assets optimized
 
-@media (min-width: 768px) {
-  .component {
-    /* Tablet styles */
-  }
-}
+### Recommended Hosting Platforms
+- **Backend**: Heroku, Railway, DigitalOcean App Platform
+- **Database**: MongoDB Atlas, DigitalOcean Managed MongoDB
+- **CDN**: Cloudflare (for static assets)
 
-@media (min-width: 1024px) {
-  .component {
-    /* Desktop styles */
-  }
-}
-```
+---
 
-### Code Quality Standards
+## 🔧 Development Guide
 
-#### Backend Code Patterns
+### Getting Started with Development
+
+1. **Fork and Clone**
+   ```bash
+   git fork https://github.com/original-repo/health-diet-platform.git
+   git clone https://github.com/your-username/health-diet-platform.git
+   ```
+
+2. **Development Workflow**
+   ```bash
+   # Create feature branch
+   git checkout -b feature/your-feature-name
+   
+   # Make changes and test
+   npm run dev
+   
+   # Commit changes
+   git add .
+   git commit -m "feat: add your feature description"
+   
+   # Push to your fork
+   git push origin feature/your-feature-name
+   ```
+
+### Code Style Guidelines
+
+#### Backend Code Pattern
 ```javascript
-// Controller pattern example
-exports.controllerFunction = async (req, res) => {
+// Controller function example
+exports.createQuery = async (req, res) => {
   try {
-    // Validation
+    // Input validation
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).render('view', { errors: errors.array() });
+      return res.status(400).render('postQuery', { 
+        errors: errors.array(),
+        user: req.session.user 
+      });
     }
     
     // Business logic
-    const result = await Model.findOne({ condition });
+    const { title, description } = req.body;
+    const query = new Query({
+      title,
+      description,
+      postedBy: req.session.user._id
+    });
     
-    // Response
-    res.render('view', { data: result });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server error');
+    await query.save();
+    
+    // Success response
+    res.redirect('/user/queries');
+    
+  } catch (error) {
+    console.error('Error creating query:', error);
+    res.status(500).render('error', { 
+      message: 'Server error occurred' 
+    });
   }
 };
 ```
 
-#### Frontend Code Patterns
+#### Frontend JavaScript Pattern
 ```javascript
-// Client-side validation example
-function validateForm(formData) {
-  const errors = [];
-  
-  if (!formData.email || !isValidEmail(formData.email)) {
-    errors.push('Valid email required');
-  }
-  
-  return errors;
-}
-
-// AJAX with error handling
-async function submitForm(formData) {
+// Form validation with error handling
+async function submitForm(formId, endpoint) {
   try {
-    const response = await fetch('/api/endpoint', {
+    const form = document.getElementById(formId);
+    const formData = new FormData(form);
+    
+    // Client-side validation
+    const errors = validateFormData(formData);
+    if (errors.length > 0) {
+      displayErrors(errors);
+      return;
+    }
+    
+    // Submit to server
+    const response = await fetch(endpoint, {
       method: 'POST',
       body: formData
     });
     
-    if (!response.ok) throw new Error('Network error');
+    if (response.ok) {
+      window.location.href = response.url;
+    } else {
+      throw new Error('Server responded with error');
+    }
     
-    const result = await response.json();
-    handleSuccess(result);
   } catch (error) {
-    handleError(error.message);
+    displayError('An error occurred. Please try again.');
   }
 }
 ```
 
-### Performance Optimizations
+---
 
-#### Database Optimizations
-- **Indexes**: Strategic indexing on frequently queried fields
-- **Aggregation**: Use MongoDB aggregation pipelines for complex queries
-- **Population**: Selective field population to reduce data transfer
-- **Caching**: Session caching with MongoDB store
+## 🤝 Contributing
 
-#### Frontend Optimizations
-- **CSS**: Minified and organized into logical modules
-- **Images**: SVG icons for scalability and performance
-- **JavaScript**: Minimal dependencies, efficient DOM manipulation
-- **Caching**: Browser caching for static assets
+We welcome contributions from the community! Please follow these guidelines:
 
-### Deployment Considerations
+### How to Contribute
 
-#### Environment Variables
-```env
-# Required environment variables
-MONGODB_URI=mongodb://localhost:27017/health-diet-app
-SESSION_SECRET=your-secure-32-character-secret-key
-PORT=3000
-NODE_ENV=production
+1. **Issues**: Report bugs or suggest features via GitHub Issues
+2. **Pull Requests**: Submit PRs for bug fixes or new features
+3. **Documentation**: Help improve documentation and guides
+4. **Testing**: Test the application and report any issues
+
+### Contribution Guidelines
+
+- Follow the existing code style and patterns
+- Write descriptive commit messages
+- Test your changes thoroughly
+- Update documentation as needed
+- Ensure responsive design compatibility
+
+### Development Setup for Contributors
+
+```bash
+# Fork the repository on GitHub
+# Clone your fork
+git clone https://github.com/your-username/health-diet-platform.git
+
+# Install dependencies
+npm install
+
+# Create a new branch for your feature
+git checkout -b feature/amazing-new-feature
+
+# Make your changes and test them
+npm run dev
+
+# Commit and push your changes
+git add .
+git commit -m "feat: add amazing new feature"
+git push origin feature/amazing-new-feature
+
+# Create a Pull Request on GitHub
 ```
 
-#### Production Checklist
-- [ ] Environment variables configured
-- [ ] MongoDB connection secured
-- [ ] Session secret is cryptographically secure
-- [ ] HTTPS enabled (handled by hosting platform)
-- [ ] Error logging implemented
-- [ ] Database indexes created
-- [ ] Static assets optimized
+---
+
+## 📚 Additional Resources
+
+### Documentation Links
+- [Node.js Documentation](https://nodejs.org/docs/)
+- [Express.js Guide](https://expressjs.com/guide/)
+- [MongoDB Manual](https://docs.mongodb.com/)
+- [Mongoose Documentation](https://mongoosejs.com/docs/)
+
+### Learning Resources
+- [EJS Template Engine](https://ejs.co/)
+- [CSS Grid Layout](https://css-tricks.com/snippets/css/complete-guide-grid/)
+- [Mobile-First Design](https://developer.mozilla.org/docs/Web/Progressive_web_apps/Responsive/Mobile_first)
 
 ### Browser Compatibility
 - **Modern Browsers**: Chrome 90+, Firefox 88+, Safari 14+, Edge 90+
-- **Mobile Browsers**: iOS Safari 14+, Chrome Mobile 90+
+- **Mobile Support**: iOS Safari 14+, Chrome Mobile 90+, Samsung Internet 13+
 - **JavaScript**: ES6+ features with graceful degradation
-- **CSS**: Flexbox and Grid with fallbacks
+- **CSS**: Flexbox and Grid with fallback support
 
-### API Documentation
+---
 
-#### Authentication Endpoints
-```javascript
-// POST /auth/register
-{
-  "name": "string (required)",
-  "email": "string (required, valid email)",
-  "password": "string (required, min 6 chars)",
-  "role": "string (optional, 'user' or 'expert')"
-}
+## 🆘 Troubleshooting
 
-// POST /auth/login
-{
-  "email": "string (required)",
-  "password": "string (required)"
-}
+### Common Issues and Solutions
+
+#### Database Connection Issues
+```bash
+# Check MongoDB is running
+sudo systemctl status mongod  # Linux
+brew services list | grep mongo  # macOS
+
+# Test connection
+mongosh "your-mongodb-uri"
+
+# Check environment variables
+echo $MONGODB_URI
 ```
 
-#### User Endpoints
+#### Session Issues
 ```javascript
-// POST /user/query
-{
-  "title": "string (required)",
-  "description": "string (required)"
-}
-
-// POST /user/feedback
-{
-  "message": "string (required)",
-  "rating": "number (optional, 1-5)",
-  "expertId": "ObjectId (optional)",
-  "queryId": "ObjectId (required)",
-  "solutionId": "ObjectId (optional)"
-}
+// Verify session configuration in app.js
+app.use(session({
+  secret: process.env.SESSION_SECRET, // Must be set
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI  // Must be valid
+  })
+}));
 ```
 
-### Troubleshooting Guide
+#### Static File Issues
+```bash
+# Ensure public folder structure is correct
+public/
+├── css/
+├── js/
+└── svg/
 
-#### Common Issues
-1. **MongoDB Connection**: Ensure MongoDB is running and URI is correct
-2. **Session Issues**: Check SESSION_SECRET is set and MongoDB store is accessible
-3. **Static Files**: Verify public folder is properly served
-4. **Authentication**: Check middleware order and session configuration
+# Check Express static middleware
+app.use(express.static('public'));
+```
 
-#### Debug Commands
+### Debug Commands
 ```bash
 # Check Node.js version
 node --version
 
-# Check MongoDB connection
-mongosh "mongodb://localhost:27017/health-diet-app"
-
-# Run with debug logging
+# Verbose logging
 DEBUG=* npm start
 
-# Check for syntax errors
-npm run lint  # (if eslint is configured)
+# Test specific endpoints
+curl -X GET http://localhost:3000/api/health-check
 ```
 
-## �📝 Notes
+---
 
-This is a production-ready application with comprehensive features for diet consultation. The codebase follows best practices with proper separation of concerns, security measures, and responsive design principles.
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- **Express.js Team** - For the robust web framework
+- **MongoDB Team** - For the flexible NoSQL database
+- **Node.js Community** - For the extensive ecosystem
+- **Open Source Contributors** - For making development tools accessible
+
+---
+
+## 📞 Contact & Support
+
+- **GitHub Issues**: [Report bugs or request features](https://github.com/your-username/health-diet-platform/issues)
+- **Documentation**: [Visit our wiki](https://github.com/your-username/health-diet-platform/wiki)
+- **Email**: support@health-diet-platform.com
+
+---
+
+<div align="center">
+
+**Built with ❤️ for health and wellness**
+
+Made by [Your Team Name] | © 2024 Health Diet Consultation Platform
+
+[⬆ Back to Top](#health-diet-consultation-platform-)
+
+</div>
