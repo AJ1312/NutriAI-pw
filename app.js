@@ -14,7 +14,6 @@ const expertRoutes = require('./routes/expert');
 const { authMiddleware, guestOnly, setUserLocals } = require('./middleware/auth');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI, {
@@ -93,4 +92,11 @@ app.post('/contact', (req, res) => {
   res.redirect('/contact?success=true');
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Export the app for serverless deployment
+module.exports = app;
+
+// For local development
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
